@@ -1,0 +1,15 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "api serverless",
+  "main": "echo \"Error: no main\" && exit 1",
+  "dependencies": {
+    "serverless-offline": "^5.12.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joshua Schmidt",
+  "license": "MIT"
+}

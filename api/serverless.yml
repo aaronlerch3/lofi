@@ -1,0 +1,49 @@
+service: lofi-api
+
+frameworkVersion: ">=1.28.0 <2.0.0"
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  appName: lofi-api
+
+provider:
+  name: aws
+  runtime: go1.x
+  stage: dev
+  region: us-east-1
+  memorySize: 128
+  environment:
+    REGION: ${self:provider.region}
+  tags:
+    appName: ${self:custom.appName}
+    stage: ${self:custom.stage}
+    owner: tony.truong
+
+plugins:
+  - serverless-offline
+
+package:
+  exclude:
+    - ./**
+  include:
+    - ./bin/**
+
+functions:
+  auth:
+    handler: bin/auth
+    environment:
+      APP_CLIENT_ID: ${env:APP_CLIENT_ID}
+      USER_POOL_ID: ${env:USER_POOL_ID}
+  privateFunc:
+    handler: bin/privateFunc
+    events:
+      - http:
+          path: authenticated
+          method: get
+          cors: true
+          authorizer: auth
+
+# Create our resources with separate CloudFormation templates
+resources:
+  # Cognito User Pool
+  - ${file(resources/cognito-user-pool.yml)}
