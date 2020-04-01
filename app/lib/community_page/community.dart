@@ -1,6 +1,7 @@
-import 'package:lofi/community_page/discussion_feed.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lofi/community_page/discussion_page.dart';
+import 'package:lofi/community_page/reviews_page.dart';
 
 class Community extends StatefulWidget {
   @override
@@ -10,41 +11,36 @@ class Community extends StatefulWidget {
 class _CommunityState extends State<Community> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        elevation: 0.0,
-        leading: null,
-        automaticallyImplyLeading: false,
-        title: Container(
-          padding: EdgeInsets.symmetric(horizontal: 0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text('COMMUNITY', style: TextStyle(color: Color(0xFF151F20), fontWeight: FontWeight.w700, fontSize: 20),),
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          Container(
-            padding: EdgeInsets.only(right: 15),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text('REVIEWS', style: TextStyle(color: Color(0xFF151F20), fontWeight: FontWeight.w700, fontSize: 20),),
+    return MaterialApp(
+      home: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            elevation: 0.0,
+            backgroundColor: Color(0xFFF7F3E3),
+            bottom: TabBar(
+              indicator: UnderlineTabIndicator(
+                  borderSide: BorderSide(color: Color(0x80151F20),width: 1.5),
+                  insets: EdgeInsets.symmetric(horizontal: 25)
+              ),
+              tabs: <Widget>[
+                Tab(
+                  child: Text("COMMUNITY", style: TextStyle(fontFamily: 'Montserrat', color: Color(0xFF151F20), fontSize: 20, fontWeight: FontWeight.w700),),
+                ),
+                Tab(
+                  child: Text("REVIEWS", style: TextStyle(fontFamily: 'Montserrat', color: Color(0xFF151F20), fontSize: 20, fontWeight: FontWeight.w700),),
+                ),
               ],
             ),
           ),
-        ],
-        backgroundColor: Color(0xF5F7F3E3),
+          body: TabBarView(
+            children: <Widget>[
+              CommunityPage(),
+              ReviewsPage(),
+            ],
+          ),
+        ),
       ),
-      body: ListView(
-        physics: BouncingScrollPhysics(),
-        children: <Widget>[
-          DiscussionFeed(),
-        ],
-      ),
-      backgroundColor: Color(0xFFF7F3E3),
     );
   }
 }

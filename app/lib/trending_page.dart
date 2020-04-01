@@ -103,7 +103,7 @@ class _TrendingState extends State<Trending> {
                                       color: Color(0xFFF7F3E3),
                                     ),
                                     Container(
-                                      margin: EdgeInsets.only(left: 10),
+                                      margin: EdgeInsets.only(left: 5),
                                       child: Column(
                                         crossAxisAlignment:
                                         CrossAxisAlignment.end,
@@ -198,7 +198,7 @@ class _TrendingState extends State<Trending> {
                                 ),
                               ),
                               Container(
-                                width: MediaQuery.of(context).size.width * .58,
+                                width: MediaQuery.of(context).size.width * .6,
                                 child: Row(
                                   children: <Widget>[
                                     Icon(
