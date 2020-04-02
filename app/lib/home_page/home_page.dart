@@ -49,6 +49,7 @@ class _HomePageState extends State<HomePage> {
               scrollDirection: Axis.horizontal,
               children: <Widget>[
                 TopTracksGallery(),
+                SizedBox(width: 15,)
               ],
             ),
           ),
@@ -140,30 +141,34 @@ class _HomePageState extends State<HomePage> {
                     Text(
                       'SONGS FOR STRANGERS',
                       style:
-                      TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                      TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                     ),
                     Text(
                       'Flycatcher',
                       style:
-                      TextStyle(fontSize: 10, fontWeight: FontWeight.w300),
+                      TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
                     ),
                     Spacer(),
                     Row(
                       children: <Widget>[
                         Icon(
-                          App.lofi_app_icons_ticket,
+                          CustomIcons.star,
                           color: Color(0xFFA2061E),
                         ),
                         Icon(
-                          App.lofi_app_icons_ticket,
+                          CustomIcons.star,
                           color: Color(0xFFA2061E),
                         ),
                         Icon(
-                          App.lofi_app_icons_ticket,
+                          CustomIcons.star,
                           color: Color(0xFFA2061E),
                         ),
                         Icon(
-                          App.lofi_app_icons_ticket,
+                          CustomIcons.star,
+                          color: Color(0xFFA2061E),
+                        ),
+                        Icon(
+                          CustomIcons.star_half,
                           color: Color(0xFFA2061E),
                         ),
                       ],
@@ -186,7 +191,7 @@ class _HomePageState extends State<HomePage> {
                   EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 5),
                   child: Text(
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia...',
-                    style: TextStyle(fontSize: 11),
+                    style: TextStyle(fontSize: 15),
                   ),
                 ),
               ),

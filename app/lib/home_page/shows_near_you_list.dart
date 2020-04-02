@@ -84,8 +84,8 @@ class _ShowsNearYouListState extends State<ShowsNearYouList> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   new Icon(
-                    App.lofi_app_icons_search,
-                    color: Color(0xFFF7F3E3),
+                    CustomIcons.forward,
+                    color: Color(0x80F7F3E3),
                   )
                 ],
               ),

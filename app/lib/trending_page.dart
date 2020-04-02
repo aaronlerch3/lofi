@@ -98,8 +98,7 @@ class _TrendingState extends State<Trending> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Icon(
-                                      App
-                                          .lofi_app_icons_trending_trending,
+                                      CustomIcons.pin,
                                       color: Color(0xFFF7F3E3),
                                     ),
                                     Container(
@@ -178,8 +177,7 @@ class _TrendingState extends State<Trending> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
                                     Icon(
-                                      App
-                                          .lofi_app_icons_trending_trending,
+                                      CustomIcons.trending,
                                       color: Color(0xFFF7F3E3),
                                     ),
                                     Spacer(),
@@ -190,8 +188,7 @@ class _TrendingState extends State<Trending> {
                                             fontWeight: FontWeight.w300)),
                                     Spacer(),
                                     Icon(
-                                      App
-                                          .lofi_app_icons_trending_trending,
+                                      CustomIcons.play_circled,
                                       color: Color(0xFFF7F3E3),
                                     ),
                                   ],
@@ -202,7 +199,7 @@ class _TrendingState extends State<Trending> {
                                 child: Row(
                                   children: <Widget>[
                                     Icon(
-                                      App.lofi_app_icons_ticket,
+                                      CustomIcons.ticket,
                                       color: Color(0xFFF7F3E3),
                                     ),
                                     Spacer(),
@@ -233,8 +230,8 @@ class _TrendingState extends State<Trending> {
                                     margin: EdgeInsets.only(
                                         left: 15, right: 15, top: 5, bottom: 5),
                                     child: Text(
-                                      'Ricky Dana, hailing from New Jersey and James Fusco and Wyn Barnum hailing from California combine forces on Phoneboy, an indie-pop force to be reckoned with. Blending mellow indie-pop and hypnagogic-pop roots with their punk and progressive rock influences, Phoneboy creates a unique style for themselves.',
-                                      style: TextStyle(fontSize: 11, fontWeight: FontWeight.w400),
+                                      'Ricky Dana, hailing from New Jersey and James Fusco and Wyn Barnum hailing from California combine forces on Phoneboy, an indie-pop force to be reckoned with. Blending mellow indie-pop and hypnagogic-pop roots with their punk and progressive rock...',
+                                      style: TextStyle(fontSize: 14.3, fontWeight: FontWeight.w400),
                                     ),
                                   ),
                                 ),
@@ -288,7 +285,7 @@ class _TrendingState extends State<Trending> {
                     Spacer(flex: 3,),
                     Column(
                       children: <Widget>[
-                        Icon(App.lofi_app_icons_trending_trending, color: Color(0xFFA2061E),),
+                        Icon(CustomIcons.trending, color: Color(0xFFA2061E),),
                       ],
                     ),
                   ],
@@ -322,7 +319,7 @@ class _TrendingState extends State<Trending> {
                     Spacer(flex: 3,),
                     Column(
                       children: <Widget>[
-                        Icon(App.lofi_app_icons_trending_trending, color: Color(0xFFA2061E),),
+                        Icon(CustomIcons.trending, color: Color(0xFFA2061E),),
                       ],
                     ),
                   ],
@@ -347,7 +344,7 @@ class _TrendingState extends State<Trending> {
                     Spacer(),
                     Column(
                       children: <Widget>[
-                        Icon(App.lofi_app_icons_trending_trending, color: Color(0xFFA2061E),),
+                        Icon(CustomIcons.trending, color: Color(0xFFA2061E),),
                       ],
                     ),
                   ],
@@ -372,7 +369,7 @@ class _TrendingState extends State<Trending> {
                     Spacer(),
                     Column(
                       children: <Widget>[
-                        Icon(App.lofi_app_icons_trending_trending, color: Color(0xFFA2061E),),
+                        Icon(CustomIcons.trending, color: Color(0xFFA2061E),),
                       ],
                     ),
                   ],
@@ -397,7 +394,7 @@ class _TrendingState extends State<Trending> {
                     Spacer(),
                     Column(
                       children: <Widget>[
-                        Icon(App.lofi_app_icons_trending_trending, color: Color(0xFFA2061E),),
+                        Icon(CustomIcons.trending, color: Color(0xFFA2061E),),
                       ],
                     ),
                   ],

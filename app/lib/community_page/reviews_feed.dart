@@ -65,26 +65,26 @@ class _ReviewsFeedState extends State<ReviewsFeed> {
                       Text(
                         title[i],
                         style:
-                        TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                       ),
                       Text(
                         artist[i],
                         style:
-                        TextStyle(fontSize: 10, fontWeight: FontWeight.w300),
+                        TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
                       ),
                       Spacer(),
                       Row(
                         children: <Widget>[
-                          Icon(App.lofi_icon_01, color: Color(0xFFA2061E),),
-                          Icon(App.lofi_icon_01, color: Color(0xFFA2061E),),
-                          Icon(App.lofi_icon_01, color: Color(0xFFA2061E),),
-                          Icon(App.lofi_icon_01, color: Color(0xFFA2061E),),
+                          Icon(CustomIcons.star, color: Color(0xFFA2061E),),
+                          Icon(CustomIcons.star, color: Color(0xFFA2061E),),
+                          Icon(CustomIcons.star, color: Color(0xFFA2061E),),
+                          Icon(CustomIcons.star, color: Color(0xFFA2061E),),
                         ],
                       ),
                       Text(
                         user[i],
                         style:
-                        TextStyle(fontSize: 9, fontWeight: FontWeight.w300),
+                        TextStyle(fontSize: 13, fontWeight: FontWeight.w300),
                       ),
                     ],
                   ),
@@ -99,7 +99,7 @@ class _ReviewsFeedState extends State<ReviewsFeed> {
                     EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 5),
                     child: Text(
                       body[i],
-                      style: TextStyle(fontSize: 11, fontFamily: 'Monterrat'),
+                      style: TextStyle(fontSize: 15, fontFamily: 'Monterrat'),
                     ),
                   ),
                 ),

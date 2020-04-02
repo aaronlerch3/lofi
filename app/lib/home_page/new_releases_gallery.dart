@@ -24,6 +24,10 @@ class _NewReleasesGalleryState extends State<NewReleasesGallery>{
     band.add("Flourish");
     band.add("Phoneboy");
     band.add("Service Dog");
+    List<String> playCount = new List<String>();
+    playCount.add("1853");
+    playCount.add("6421");
+    playCount.add("542");
     for (var i = 0; i < images.length; i++) {
       children.add(Container(
         width: MediaQuery.of(context).size.width,
@@ -60,7 +64,15 @@ class _NewReleasesGalleryState extends State<NewReleasesGallery>{
             Spacer(flex: 3,),
             Container(
               margin: EdgeInsets.only(right: 15),
-              child: Icon(App.lofi_app_icons_trending_trending, color: Color(0xFFA2061E),),
+              child: Row(
+                children: <Widget>[
+                  Icon(CustomIcons.play_circled, color: Color(0xFFA2061E), size: 15,),
+                  Container(
+                    padding: EdgeInsets.only(left: 4),
+                    child: Text(playCount[i], style: TextStyle(fontSize: 12)),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

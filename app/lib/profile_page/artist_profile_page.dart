@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lofi/icons.dart';
 
 class ArtistProfilePage extends StatefulWidget {
   @override
@@ -14,7 +15,7 @@ class _ArtistProfilePageState extends State<ArtistProfilePage>{
       appBar: AppBar(
         iconTheme: IconThemeData(color: Color(0xFFA2061E)),
         leading: new IconButton(
-          icon: Icon(Icons.keyboard_arrow_left, size: 45,),
+          icon: Icon(CustomIcons.back, size: 25,),
           onPressed: () {
             Navigator.pop(context);
           },

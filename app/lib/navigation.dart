@@ -33,14 +33,14 @@ class _NavigationState extends State<Navigation> {
       //appBar
       appBar: AppBar(
         iconTheme: IconThemeData(color: Color(0xFFA2061E)),
-        leading: new Icon(App.lofi_app_icons_search, size: 28,),
+        leading: new Icon(CustomIcons.search, size: 28,),
         title: new Icon(
-          App.lofi_icon_01,
+          CustomIcons.logo,
           size: 42,
         ),
         actions: <Widget>[
           new IconButton(
-            icon: Icon(App.lofi_app_icons_profile, size: 30,),
+            icon: Icon(CustomIcons.user, size: 30,),
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => ArtistProfilePage()));
             },
@@ -54,7 +54,7 @@ class _NavigationState extends State<Navigation> {
       //bottomNav
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Color(0xFF151F20),
+        backgroundColor: Color(0xFF151F20).withOpacity(1),
         selectedItemColor: Color(0xFFF7F3E3),
         unselectedItemColor: Color(0x80F7F3E3),
         onTap: onTabTapped,
@@ -63,22 +63,22 @@ class _NavigationState extends State<Navigation> {
         items: [
           //home
           BottomNavigationBarItem(
-            icon: new Icon(App.lofi_app_icons_home),
+            icon: new Icon(CustomIcons.home),
             title: const Text('Home', style: TextStyle(fontSize: 11)),
           ),
           //Trending
           BottomNavigationBarItem(
-            icon: new Icon(App.lofi_app_icons_trending_trending),
+            icon: new Icon(CustomIcons.trending),
             title: const Text('Trending', style: TextStyle(fontSize: 11)),
           ),
           //Community
           BottomNavigationBarItem(
-            icon: Icon(App.lofi_app_icons_community),
+            icon: Icon(CustomIcons.community),
             title: const Text('Community', style: TextStyle(fontSize: 11)),
           ),
           //Shows
           BottomNavigationBarItem(
-            icon: Icon(App.lofi_app_icons_ticket),
+            icon: Icon(CustomIcons.ticket),
             title: const Text('Shows', style: TextStyle(fontSize: 11)),
           )
         ],
