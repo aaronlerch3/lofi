@@ -37,7 +37,7 @@ class _ShowsNearYouListState extends State<ShowsNearYouList> {
     venue.add("Black Rail Coffee");
     for (var i = 0; i < band.length; i++) {
       children.add(Container(
-        margin: EdgeInsets.only(top: 10),
+        margin: EdgeInsets.only(top: 17),
         child: Row(
           //Event 1
           crossAxisAlignment: CrossAxisAlignment.center,

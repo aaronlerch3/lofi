@@ -87,7 +87,7 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               Expanded(
                 child: Container(
-                  margin: EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 15),
+                  margin: EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 20),
                   child: Column(
                     children: <Widget>[
                       DecoratedBox(
@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                                 'SHOWS NEAR YOU',
                                 style: TextStyle(
                                     color: Color(0xFFF7F3E3),
-                                    fontSize: 18,
+                                    fontSize: 24,
                                     fontWeight: FontWeight.w700),
                               ),
                               ShowsNearYouList(),

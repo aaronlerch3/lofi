@@ -28,28 +28,21 @@ class _NewReleasesGalleryState extends State<NewReleasesGallery>{
     playCount.add("1853");
     playCount.add("6421");
     playCount.add("542");
+    List<String> comments = new List<String>();
+    comments.add("62");
+    comments.add("241");
+    comments.add("34");
     for (var i = 0; i < images.length; i++) {
       children.add(Container(
         width: MediaQuery.of(context).size.width,
         child:  Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(left: 15, right: 10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Image.asset(
-                    images[i],
-                    scale: 3.9,
-                  ),
-                ],
-              ),
-            ),
-            Container(
+              margin: EdgeInsets.only(left: 0),
               height: 170,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
@@ -61,15 +54,46 @@ class _NewReleasesGalleryState extends State<NewReleasesGallery>{
                 ],
               ),
             ),
-            Spacer(flex: 3,),
             Container(
-              margin: EdgeInsets.only(right: 15),
-              child: Row(
+              margin: EdgeInsets.only(left: 0, right: 0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Icon(CustomIcons.play_circled, color: Color(0xFFA2061E), size: 15,),
+                  Image.asset(
+                    images[i],
+                    scale: 3.9,
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(right: 0, top: 15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
                   Container(
-                    padding: EdgeInsets.only(left: 4),
-                    child: Text(playCount[i], style: TextStyle(fontSize: 12)),
+                    margin: EdgeInsets.only(bottom: 5),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(CustomIcons.play_circled, color: Color(0xFFA2061E), size: 25,),
+                        Container(
+                          padding: EdgeInsets.only(left: 5),
+                          child: Text(playCount[i], style: TextStyle(fontSize: 15)),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(CustomIcons.community, color: Color(0xFFA2061E), size: 25,),
+                      Container(
+                        padding: EdgeInsets.only(left: 6, bottom: 4),
+                        child: Text(comments[i], style: TextStyle(fontSize: 15)),
+                      ),
+                    ],
                   ),
                 ],
               ),
