@@ -87,7 +87,7 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               Expanded(
                 child: Container(
-                  margin: EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 20),
+                  margin: EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 20),
                   child: Column(
                     children: <Widget>[
                       DecoratedBox(
@@ -117,7 +117,41 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
+          Row(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(left: 15, right: 10),
+                margin: EdgeInsets.only(top: 13, bottom: 20),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      'HOT FORUMS',
+                      style:
+                      TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
           DiscussionFeed(),
+          Row(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(left: 15, right: 10),
+                margin: EdgeInsets.only(top: 13, bottom: 20),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      'FRESH REVIEWS',
+                      style:
+                      TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
           Row(
             children: <Widget>[
               Container(
