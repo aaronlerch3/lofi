@@ -25,7 +25,7 @@ class _CommunityState extends State<Community> {
               ),
               tabs: <Widget>[
                 Tab(
-                  child: Text("COMMUNITY", style: TextStyle(fontFamily: 'Montserrat', color: Color(0xFF151F20), fontSize: 20, fontWeight: FontWeight.w700),),
+                  child: Text("FORUMS", style: TextStyle(fontFamily: 'Montserrat', color: Color(0xFF151F20), fontSize: 20, fontWeight: FontWeight.w700),),
                 ),
                 Tab(
                   child: Text("REVIEWS", style: TextStyle(fontFamily: 'Montserrat', color: Color(0xFF151F20), fontSize: 20, fontWeight: FontWeight.w700),),

@@ -24,16 +24,16 @@ class _HomePageState extends State<HomePage> {
           Row(
             children: <Widget>[
               Container(
-                margin: EdgeInsets.only(top: 90),
-                padding: EdgeInsets.only(left: 10, right: 10),
+                margin: EdgeInsets.only(top: 90, bottom: 10),
+                padding: EdgeInsets.only(left: 15, right: 10),
                 alignment: Alignment.centerLeft,
                 height: 25,
                 child: Column(
                   children: <Widget>[
                     Text(
-                      'TOP TRACKS THIS WEEK',
+                      'TOP TRACKS NOW',
                       style:
-                      TextStyle(fontWeight: FontWeight.w800, fontSize: 18),
+                      TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
                     ),
                   ],
                 ),
@@ -42,8 +42,8 @@ class _HomePageState extends State<HomePage> {
           ),
           //Top Tracks
           Container(
-            height: 170,
-            margin: EdgeInsets.only(left: 10),
+            height: MediaQuery.of(context).size.height * .282,
+            margin: EdgeInsets.only(left: 0, bottom: 10),
             child: ListView(
               physics: BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
@@ -55,14 +55,14 @@ class _HomePageState extends State<HomePage> {
           Row(
             children: <Widget>[
               Container(
-                padding: EdgeInsets.only(left: 10, right: 10),
-                margin: EdgeInsets.only(top: 7, bottom: 5),
+                padding: EdgeInsets.only(left: 15, right: 10),
+                margin: EdgeInsets.only(top: 13, bottom: 5),
                 child: Column(
                   children: <Widget>[
                     Text(
                       'NEW RELEASES',
                       style:
-                      TextStyle(fontWeight: FontWeight.w800, fontSize: 18),
+                      TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
                     ),
                   ],
                 ),
@@ -86,19 +86,30 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               Expanded(
                 child: Container(
-                  margin: EdgeInsets.only(top: 15),
-                  padding: EdgeInsets.symmetric(vertical: 14),
-                  color: Color(0xFF151F20),
+                  margin: EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 15),
                   child: Column(
                     children: <Widget>[
-                      Text(
-                        'SHOWS NEAR YOU',
-                        style: TextStyle(
-                            color: Color(0xFFF7F3E3),
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700),
+                      DecoratedBox(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: Color(0xFF151F20)
+                        ),
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 15),
+                          child: Column(
+                            children: <Widget>[
+                              Text(
+                                'SHOWS NEAR YOU',
+                                style: TextStyle(
+                                    color: Color(0xFFF7F3E3),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              ShowsNearYouList(),
+                            ],
+                          ),
+                        ),
                       ),
-                      ShowsNearYouList(),
                     ],
                   ),
                 ),

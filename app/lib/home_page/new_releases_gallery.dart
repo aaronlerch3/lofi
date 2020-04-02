@@ -31,13 +31,13 @@ class _NewReleasesGalleryState extends State<NewReleasesGallery>{
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(left: 10, right: 10),
+              margin: EdgeInsets.only(left: 15, right: 10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Image.asset(
                     images[i],
-                    scale: 4,
+                    scale: 3.9,
                   ),
                 ],
               ),

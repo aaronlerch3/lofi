@@ -10,17 +10,16 @@ class _DiscussionFeedState extends State<DiscussionFeed> {
   @override
   Widget build(BuildContext context) {
     List<Widget> children = new List<Widget>();
-    List<String> body = new List<String>();
-    body.add("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia...");
-    body.add("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?");
-    body.add("Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur!");
-    body.add("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad \n\nminim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit!");
-    body.add("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia...");
     List<String> user = new List<String>();
     user.add('experienced_user1');
     user.add('new_user12');
     user.add('lead_guitar1');
     user.add('drummerDude123');
+    user.add('other_user5');
+    user.add('other_user5');
+    user.add('other_user5');
+    user.add('other_user5');
+    user.add('other_user5');
     user.add('other_user5');
     List<String> title = new List<String>();
     title.add("Finding gigs in NYC");
@@ -28,11 +27,21 @@ class _DiscussionFeedState extends State<DiscussionFeed> {
     title.add("Looking for bassist in NYC area!");
     title.add("Need practice space in Hoboken!!");
     title.add("Lorem ipsum dolor sit amet!");
+    title.add("Lorem ipsum dolor sit amet!");
+    title.add("Lorem ipsum dolor sit amet!");
+    title.add("Lorem ipsum dolor sit amet!");
+    title.add("Lorem ipsum dolor sit amet!");
+    title.add("Lorem ipsum dolor sit amet!");
     List<String> tag = new List<String>();
     tag.add("P&F");
     tag.add("DISCUSSION");
     tag.add("LOOKING FOR");
     tag.add("LOOKING FOR");
+    tag.add("OTHER");
+    tag.add("OTHER");
+    tag.add("OTHER");
+    tag.add("OTHER");
+    tag.add("OTHER");
     tag.add("OTHER");
     for (var i = 0; i < user.length; i++) {
       children.add(Container(
@@ -57,8 +66,8 @@ class _DiscussionFeedState extends State<DiscussionFeed> {
                             tag[i],
                             style: TextStyle(
                                 color: Color(0xFFF7F3E3),
-                                fontSize: 10,
-                                fontWeight: FontWeight.w300),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400),
                           ),
                         ),
                       ),
@@ -71,7 +80,7 @@ class _DiscussionFeedState extends State<DiscussionFeed> {
                     children: <Widget>[
                       Text(
                         user[i],
-                        style: TextStyle(fontSize: 10),
+                        style: TextStyle(fontSize: 13.5),
                       )
                     ],
                   ),
@@ -81,24 +90,10 @@ class _DiscussionFeedState extends State<DiscussionFeed> {
             Row(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.only(left: 15),
+                  padding: EdgeInsets.only(left: 15, bottom: 10),
                   child: Text(
                     title[i],
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                    margin:
-                    EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
-                    child: Text(
-                      body[i],
-                      style: TextStyle(fontSize: 11),
-                    ),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
                   ),
                 ),
               ],

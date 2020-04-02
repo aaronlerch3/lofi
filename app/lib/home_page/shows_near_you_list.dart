@@ -51,13 +51,13 @@ class _ShowsNearYouListState extends State<ShowsNearYouList> {
                   Text(month[i],
                       style: TextStyle(
                           color: Color(0xFFF7F3E3),
-                          fontSize: 16)),
+                          fontSize: 16, fontWeight: FontWeight.w600)),
                   Text(
                     day[i],
                     style: TextStyle(
                         color: Color(0xFFF7F3E3),
                         fontSize: 26,
-                        fontWeight: FontWeight.w100),
+                        fontWeight: FontWeight.w300),
                   ),
                 ],
               ),
@@ -67,13 +67,13 @@ class _ShowsNearYouListState extends State<ShowsNearYouList> {
               children: <Widget>[
                 Text(band[i],
                     style: TextStyle(
-                        color: Color(0xFFF7F3E3), fontSize: 16)),
+                        color: Color(0xFFF7F3E3), fontSize: 18.5, fontWeight: FontWeight.w600)),
                 Text(
                   venue[i],
                   style: TextStyle(
                       color: Color(0xFFF7F3E3),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w300),
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400),
                 ),
               ],
             ),
