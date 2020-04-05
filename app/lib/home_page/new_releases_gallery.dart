@@ -50,7 +50,8 @@ class _NewReleasesGalleryState extends State<NewReleasesGallery> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(left: 15, top: 20, bottom: 20),
+              margin: EdgeInsets.only(left: 15, top: 20, bottom: 20, right: 15),
+              width: MediaQuery.of(context).size.width * .49,
               height: 170,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,8 +60,16 @@ class _NewReleasesGalleryState extends State<NewReleasesGallery> {
                   Text(
                     album[i],
                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    softWrap: true,
                   ),
-                  Text(band[i], style: TextStyle(fontSize: 18)),
+                  SizedBox(height: 2,),
+                  Text(band[i], style: TextStyle(fontSize: 18),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    softWrap: true,
+                  ),
                   Spacer(),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -74,7 +83,7 @@ class _NewReleasesGalleryState extends State<NewReleasesGallery> {
                       SizedBox(
                         width: 5,
                       ),
-                      Text(playCount[i], style: TextStyle(fontSize: 15)),
+                      Text(playCount[i], style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800)),
                       SizedBox(width: 15,),
                       Container(
                         padding: EdgeInsets.only(top: 2),
@@ -87,7 +96,7 @@ class _NewReleasesGalleryState extends State<NewReleasesGallery> {
                       Container(
                         padding: EdgeInsets.only(left: 6, bottom: 0),
                         child:
-                        Text(comments[i], style: TextStyle(fontSize: 15)),
+                        Text(comments[i], style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800)),
                       ),
                     ],
                   ),

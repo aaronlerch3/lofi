@@ -36,15 +36,42 @@ class _MessagesState extends State<Messages> {
         backgroundColor: Color(0xFC151F20),
       ),
       body: ListView(
+        physics: BouncingScrollPhysics(),
         children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(Icons.search),
+                Container(
+                  margin: EdgeInsets.only(left: 15),
+                  padding: EdgeInsets.only(left: 15),
+                  width: MediaQuery.of(context).size.width * .8,
+                  height: 35,
+                  decoration: BoxDecoration(
+                    color: Color(0x1A151F20),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: TextField(
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Search'
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
           Container(
             margin: EdgeInsets.only(top: 20, left: 15, right: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Container(
-                  width: MediaQuery.of(context).size.width * .2,
-                  height: MediaQuery.of(context).size.width * .2,
+                  width: MediaQuery.of(context).size.width * .18,
+                  height: MediaQuery.of(context).size.width * .18,
                   child: CircleAvatar(
                     backgroundColor: Color(0xFFF7F3E3),
                     foregroundColor: Color(0xFFF7F3E3),

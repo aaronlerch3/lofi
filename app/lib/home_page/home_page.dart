@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lofi/home_page/top_tracks_gallery.dart';
 
-
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -26,26 +25,29 @@ class _HomePageState extends State<HomePage> {
               Container(
                 margin: EdgeInsets.only(top: 95, bottom: 20),
                 padding: EdgeInsets.only(left: 15, right: 10),
-                alignment: Alignment.centerLeft,
                 height: 25,
-                child: Column(
+                width: MediaQuery.of(context).size.width,
+                child: Row(
                   children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Icon(Icons.play_circle_filled, size: 25, color: Color(0x99A2061E),),
-                        SizedBox(width: 8,),
-                        Text(
-                          'TOP TRACKS NOW',
-                          style:
+                    Icon(
+                      Icons.play_circle_filled,
+                      size: 25,
+                      color: Color(0x99A2061E),
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      'TOP TRACKS NOW',
+                      style:
                           TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
-                        ),
-                        Divider(
-                          color: Color(0x40151F20),
-                          indent: 15,
-                          endIndent: 15,
-                          thickness: 2,
-                        ),
-                      ],
+                    ),
+                    Spacer(),
+                    Text(
+                      "See All",
+                      style: TextStyle(
+                          color: Color(0x99151F20),
+                          fontWeight: FontWeight.w800),
                     ),
                   ],
                 ),
@@ -61,7 +63,9 @@ class _HomePageState extends State<HomePage> {
               scrollDirection: Axis.horizontal,
               children: <Widget>[
                 TopTracksGallery(),
-                SizedBox(width: 15,)
+                SizedBox(
+                  width: 15,
+                )
               ],
             ),
           ),
@@ -70,18 +74,28 @@ class _HomePageState extends State<HomePage> {
               Container(
                 padding: EdgeInsets.only(left: 15, right: 10),
                 margin: EdgeInsets.only(top: 13, bottom: 15),
-                child: Column(
+                width: MediaQuery.of(context).size.width,
+                child: Row(
                   children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Icon(Icons.new_releases, size: 25, color: Color(0x99A2061E),),
-                        SizedBox(width: 8,),
-                        Text(
-                          'NEW RELEASES',
-                          style:
+                    Icon(
+                      Icons.new_releases,
+                      size: 25,
+                      color: Color(0x99A2061E),
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      'NEW RELEASES',
+                      style:
                           TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
-                        ),
-                      ],
+                    ),
+                    Spacer(),
+                    Text(
+                      "See All",
+                      style: TextStyle(
+                          color: Color(0x99151F20),
+                          fontWeight: FontWeight.w800),
                     ),
                   ],
                 ),
@@ -95,9 +109,7 @@ class _HomePageState extends State<HomePage> {
             child: ListView(
               physics: PageScrollPhysics(),
               scrollDirection: Axis.horizontal,
-              children: <Widget>[
-                NewReleasesGallery()
-              ],
+              children: <Widget>[NewReleasesGallery()],
             ),
           ),
           //Shows Near You
@@ -105,14 +117,14 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               Expanded(
                 child: Container(
-                  margin: EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 20),
+                  margin:
+                      EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 20),
                   child: Column(
                     children: <Widget>[
                       DecoratedBox(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: Color(0xFF151F20)
-                        ),
+                            borderRadius: BorderRadius.circular(30),
+                            color: Color(0xFF151F20)),
                         child: Container(
                           padding: EdgeInsets.symmetric(vertical: 15),
                           child: Column(
@@ -125,6 +137,25 @@ class _HomePageState extends State<HomePage> {
                                     fontWeight: FontWeight.w700),
                               ),
                               ShowsNearYouList(),
+                              Container(
+                                margin: EdgeInsets.only(top: 15, bottom: 5),
+                                width: 102,
+                                child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFA2061E),
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "SEE ALL",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          color: Color(0xFFF7F3E3),
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -139,19 +170,29 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               Container(
                 padding: EdgeInsets.only(left: 15, right: 10),
-                margin: EdgeInsets.only(top: 13, bottom: 20),
-                child: Column(
+                margin: EdgeInsets.only(top: 10, bottom: 20),
+                width: MediaQuery.of(context).size.width,
+                child: Row(
                   children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Icon(Icons.whatshot, size: 25, color: Color(0x99A2061E),),
-                        SizedBox(width: 8,),
-                        Text(
-                          'HOT FORUMS',
-                          style:
+                    Icon(
+                      Icons.whatshot,
+                      size: 25,
+                      color: Color(0x99A2061E),
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      'HOT FORUMS',
+                      style:
                           TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
-                        ),
-                      ],
+                    ),
+                    Spacer(),
+                    Text(
+                      "See All",
+                      style: TextStyle(
+                          color: Color(0x99151F20),
+                          fontWeight: FontWeight.w800),
                     ),
                   ],
                 ),
@@ -164,18 +205,28 @@ class _HomePageState extends State<HomePage> {
               Container(
                 padding: EdgeInsets.only(left: 15, right: 10),
                 margin: EdgeInsets.only(top: 13, bottom: 20),
-                child: Column(
+                width: MediaQuery.of(context).size.width,
+                child: Row(
                   children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Icon(Icons.star, size: 25, color: Color(0x99A2061E),),
-                        SizedBox(width: 8,),
-                        Text(
-                          'FRESH REVIEWS',
-                          style:
+                    Icon(
+                      Icons.star,
+                      size: 25,
+                      color: Color(0x99A2061E),
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      'FRESH REVIEWS',
+                      style:
                           TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
-                        ),
-                      ],
+                    ),
+                    Spacer(),
+                    Text(
+                      "See All",
+                      style: TextStyle(
+                          color: Color(0x99151F20),
+                          fontWeight: FontWeight.w800),
                     ),
                   ],
                 ),
@@ -205,12 +256,12 @@ class _HomePageState extends State<HomePage> {
                     Text(
                       'SONGS FOR STRANGERS',
                       style:
-                      TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                     ),
                     Text(
                       'Flycatcher',
                       style:
-                      TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
                     ),
                     Spacer(),
                     Row(
@@ -240,7 +291,7 @@ class _HomePageState extends State<HomePage> {
                     Text(
                       '@music_reviewer6',
                       style:
-                      TextStyle(fontSize: 9, fontWeight: FontWeight.w300),
+                          TextStyle(fontSize: 9, fontWeight: FontWeight.w300),
                     ),
                   ],
                 ),
@@ -252,7 +303,7 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                 child: Container(
                   margin:
-                  EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 5),
+                      EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 5),
                   child: Text(
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia...',
                     style: TextStyle(fontSize: 15),
