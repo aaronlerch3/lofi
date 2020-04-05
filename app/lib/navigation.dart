@@ -1,11 +1,12 @@
+import 'package:lofi/discover_page.dart';
+import 'package:lofi/home_page/messages.dart';
 import 'package:lofi/icons.dart';
-import 'package:lofi/profile_page/artist_profile_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lofi/profile_page/profile_page.dart';
+import 'package:lofi/shows_page/shows_page.dart';
 import 'home_page/home_page.dart';
-import 'package:lofi/trending_page.dart';
 import 'community_page/community.dart';
-import 'package:lofi/tickets_page/main.dart';
 import 'package:lofi/create_account_page/main.dart';
 import 'package:lofi/login_page/main.dart';
 
@@ -20,9 +21,9 @@ class _NavigationState extends State<Navigation> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     HomePage(),
-    Trending(),
+    Discover(),
     Community(),
-    Tickets(),
+    Shows(),
     // CreateAccountPage(),
     // LoginPage(),
   ];
@@ -32,23 +33,28 @@ class _NavigationState extends State<Navigation> {
       extendBodyBehindAppBar: true,
       //appBar
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Color(0xFFA2061E)),
-        leading: new Icon(CustomIcons.search, size: 28,),
+        iconTheme: IconThemeData(color: Color(0xFFF7F3E3)),
+        leading: new IconButton(
+          icon: Icon(CustomIcons.user, size: 30,),
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
+          },
+        ),
         title: new Icon(
           CustomIcons.logo,
-          size: 42,
+          size: 40,
         ),
         actions: <Widget>[
           new IconButton(
-            icon: Icon(CustomIcons.user, size: 30,),
+            icon: Icon(Icons.message, size: 32, color: Color(0xFFF7F3E3)),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ArtistProfilePage()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Messages()));
             },
           ),
         ],
         centerTitle: true,
         elevation: 0.0,
-        backgroundColor: Color(0xF5F7F3E3),
+        backgroundColor: Color(0xFC151F20),
       ),
       body: _children[_currentIndex],
       //bottomNav
@@ -69,11 +75,11 @@ class _NavigationState extends State<Navigation> {
           //Trending
           BottomNavigationBarItem(
             icon: new Icon(CustomIcons.trending),
-            title: const Text('Trending', style: TextStyle(fontSize: 11)),
+            title: const Text('Discover', style: TextStyle(fontSize: 11)),
           ),
           //Community
           BottomNavigationBarItem(
-            icon: Icon(CustomIcons.community),
+            icon: Icon(Icons.people, size: 28,),
             title: const Text('Community', style: TextStyle(fontSize: 11)),
           ),
           //Shows

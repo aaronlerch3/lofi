@@ -23,18 +23,44 @@ class BackgroundClipper extends CustomClipper<Path> {
   }
 }
 
-class Trending extends StatefulWidget {
+class Discover extends StatefulWidget {
   @override
-  _TrendingState createState() => _TrendingState();
+  _DiscoverState createState() => _DiscoverState();
 }
 
-class _TrendingState extends State<Trending> {
+class _DiscoverState extends State<Discover> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
         physics: BouncingScrollPhysics(),
         children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(left: 15, right: 15, top: 25, bottom: 15),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(Icons.search),
+                Container(
+                  margin: EdgeInsets.only(left: 15),
+                  padding: EdgeInsets.only(left: 15),
+                  width: MediaQuery.of(context).size.width * .8,
+                  height: 35,
+                  decoration: BoxDecoration(
+                    color: Color(0x1A151F20),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: TextField(
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Search'
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
           Row(
             children: <Widget>[
               Container(
@@ -87,7 +113,7 @@ class _TrendingState extends State<Trending> {
                                     radius: MediaQuery.of(context).size.width *
                                         .245,
                                     backgroundImage:
-                                    AssetImage('images/wyn.jpg'),
+                                        AssetImage('images/wyn.jpg'),
                                   ),
                                 ),
                               ),
@@ -105,7 +131,7 @@ class _TrendingState extends State<Trending> {
                                       margin: EdgeInsets.only(left: 5),
                                       child: Column(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.end,
+                                            CrossAxisAlignment.end,
                                         children: <Widget>[
                                           Text('Hoboken, NJ',
                                               style: TextStyle(
@@ -129,7 +155,7 @@ class _TrendingState extends State<Trending> {
                           ),
                           Container(
                             margin:
-                            EdgeInsets.only(left: 15, right: 15, top: 15),
+                                EdgeInsets.only(left: 15, right: 15, top: 15),
                             child: Row(
                               children: <Widget>[
                                 Column(
@@ -151,7 +177,7 @@ class _TrendingState extends State<Trending> {
                                       ),
                                       child: Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                         children: <Widget>[
                                           Text(
                                             'INDIE POP',
@@ -231,7 +257,9 @@ class _TrendingState extends State<Trending> {
                                         left: 15, right: 15, top: 5, bottom: 5),
                                     child: Text(
                                       'Ricky Dana, hailing from New Jersey and James Fusco and Wyn Barnum hailing from California combine forces on Phoneboy, an indie-pop force to be reckoned with. Blending mellow indie-pop and hypnagogic-pop roots with their punk and progressive rock...',
-                                      style: TextStyle(fontSize: 14.3, fontWeight: FontWeight.w400),
+                                      style: TextStyle(
+                                          fontSize: 14.3,
+                                          fontWeight: FontWeight.w400),
                                     ),
                                   ),
                                 ),
@@ -253,7 +281,13 @@ class _TrendingState extends State<Trending> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text('NEW ARTISTS', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: Color(0xFFA2061E)),),
+                    Text(
+                      'NEW ARTISTS',
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFFA2061E)),
+                    ),
                   ],
                 ),
                 Row(
@@ -265,8 +299,7 @@ class _TrendingState extends State<Trending> {
                         border: Border.all(width: 3, color: Color(0x80A2061E)),
                         image: DecorationImage(
                             image: AssetImage('images/wyn.jpg'),
-                            fit: BoxFit.cover
-                        ),
+                            fit: BoxFit.cover),
                       ),
                       height: 130,
                       width: 130,
@@ -276,16 +309,35 @@ class _TrendingState extends State<Trending> {
                       children: <Widget>[
                         FittedBox(
                           fit: BoxFit.fitWidth,
-                          child: Text('BEEKEEPER', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: Color(0xFFA2061E)),),
+                          child: Text(
+                            'BEEKEEPER',
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xFFA2061E)),
+                          ),
                         ),
-                        Text('Hoboken, NJ', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),),
-                        Text('0.1 mi', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300),),
+                        Text(
+                          'Hoboken, NJ',
+                          style: TextStyle(
+                              fontSize: 13, fontWeight: FontWeight.w700),
+                        ),
+                        Text(
+                          '0.1 mi',
+                          style: TextStyle(
+                              fontSize: 13, fontWeight: FontWeight.w300),
+                        ),
                       ],
                     ),
-                    Spacer(flex: 3,),
+                    Spacer(
+                      flex: 3,
+                    ),
                     Column(
                       children: <Widget>[
-                        Icon(CustomIcons.trending, color: Color(0xFFA2061E),),
+                        Icon(
+                          CustomIcons.trending,
+                          color: Color(0xFFA2061E),
+                        ),
                       ],
                     ),
                   ],
@@ -299,8 +351,7 @@ class _TrendingState extends State<Trending> {
                         border: Border.all(width: 3, color: Color(0x80A2061E)),
                         image: DecorationImage(
                             image: AssetImage('images/wyn.jpg'),
-                            fit: BoxFit.cover
-                        ),
+                            fit: BoxFit.cover),
                       ),
                       height: 130,
                       width: 130,
@@ -310,16 +361,34 @@ class _TrendingState extends State<Trending> {
                       children: <Widget>[
                         FittedBox(
                           fit: BoxFit.fitWidth,
-                          child: Text('BEHIND THE CURTAIN', style: TextStyle(fontWeight: FontWeight.w700, color: Color(0xFFA2061E)),),
+                          child: Text(
+                            'BEHIND THE CURTAIN',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xFFA2061E)),
+                          ),
                         ),
-                        Text('Hoboken, NJ', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),),
-                        Text('0.1 mi', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300),),
+                        Text(
+                          'Hoboken, NJ',
+                          style: TextStyle(
+                              fontSize: 13, fontWeight: FontWeight.w700),
+                        ),
+                        Text(
+                          '0.1 mi',
+                          style: TextStyle(
+                              fontSize: 13, fontWeight: FontWeight.w300),
+                        ),
                       ],
                     ),
-                    Spacer(flex: 3,),
+                    Spacer(
+                      flex: 3,
+                    ),
                     Column(
                       children: <Widget>[
-                        Icon(CustomIcons.trending, color: Color(0xFFA2061E),),
+                        Icon(
+                          CustomIcons.trending,
+                          color: Color(0xFFA2061E),
+                        ),
                       ],
                     ),
                   ],
@@ -334,17 +403,23 @@ class _TrendingState extends State<Trending> {
                         border: Border.all(width: 3, color: Color(0x80A2061E)),
                         image: DecorationImage(
                             image: AssetImage('images/wyn.jpg'),
-                            fit: BoxFit.cover
-                        ),
+                            fit: BoxFit.cover),
                       ),
                       height: 75,
                       width: 75,
                     ),
-                    Text('Example 1', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),),
+                    Text(
+                      'Example 1',
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
+                    ),
                     Spacer(),
                     Column(
                       children: <Widget>[
-                        Icon(CustomIcons.trending, color: Color(0xFFA2061E),),
+                        Icon(
+                          CustomIcons.trending,
+                          color: Color(0xFFA2061E),
+                        ),
                       ],
                     ),
                   ],
@@ -359,17 +434,23 @@ class _TrendingState extends State<Trending> {
                         border: Border.all(width: 3, color: Color(0x80A2061E)),
                         image: DecorationImage(
                             image: AssetImage('images/wyn.jpg'),
-                            fit: BoxFit.cover
-                        ),
+                            fit: BoxFit.cover),
                       ),
                       height: 75,
                       width: 75,
                     ),
-                    Text('Example 2', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),),
+                    Text(
+                      'Example 2',
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
+                    ),
                     Spacer(),
                     Column(
                       children: <Widget>[
-                        Icon(CustomIcons.trending, color: Color(0xFFA2061E),),
+                        Icon(
+                          CustomIcons.trending,
+                          color: Color(0xFFA2061E),
+                        ),
                       ],
                     ),
                   ],
@@ -384,17 +465,23 @@ class _TrendingState extends State<Trending> {
                         border: Border.all(width: 3, color: Color(0x80A2061E)),
                         image: DecorationImage(
                             image: AssetImage('images/wyn.jpg'),
-                            fit: BoxFit.cover
-                        ),
+                            fit: BoxFit.cover),
                       ),
                       height: 75,
                       width: 75,
                     ),
-                    Text('Example 3', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),),
+                    Text(
+                      'Example 3',
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
+                    ),
                     Spacer(),
                     Column(
                       children: <Widget>[
-                        Icon(CustomIcons.trending, color: Color(0xFFA2061E),),
+                        Icon(
+                          CustomIcons.trending,
+                          color: Color(0xFFA2061E),
+                        ),
                       ],
                     ),
                   ],

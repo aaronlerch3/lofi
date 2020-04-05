@@ -24,16 +24,28 @@ class _HomePageState extends State<HomePage> {
           Row(
             children: <Widget>[
               Container(
-                margin: EdgeInsets.only(top: 90, bottom: 10),
+                margin: EdgeInsets.only(top: 95, bottom: 20),
                 padding: EdgeInsets.only(left: 15, right: 10),
                 alignment: Alignment.centerLeft,
                 height: 25,
                 child: Column(
                   children: <Widget>[
-                    Text(
-                      'TOP TRACKS NOW',
-                      style:
-                      TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
+                    Row(
+                      children: <Widget>[
+                        Icon(Icons.play_circle_filled, size: 25, color: Color(0x99A2061E),),
+                        SizedBox(width: 8,),
+                        Text(
+                          'TOP TRACKS NOW',
+                          style:
+                          TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
+                        ),
+                        Divider(
+                          color: Color(0x40151F20),
+                          indent: 15,
+                          endIndent: 15,
+                          thickness: 2,
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -57,13 +69,19 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               Container(
                 padding: EdgeInsets.only(left: 15, right: 10),
-                margin: EdgeInsets.only(top: 13, bottom: 5),
+                margin: EdgeInsets.only(top: 13, bottom: 15),
                 child: Column(
                   children: <Widget>[
-                    Text(
-                      'NEW RELEASES',
-                      style:
-                      TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
+                    Row(
+                      children: <Widget>[
+                        Icon(Icons.new_releases, size: 25, color: Color(0x99A2061E),),
+                        SizedBox(width: 8,),
+                        Text(
+                          'NEW RELEASES',
+                          style:
+                          TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -124,10 +142,16 @@ class _HomePageState extends State<HomePage> {
                 margin: EdgeInsets.only(top: 13, bottom: 20),
                 child: Column(
                   children: <Widget>[
-                    Text(
-                      'HOT FORUMS',
-                      style:
-                      TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
+                    Row(
+                      children: <Widget>[
+                        Icon(Icons.whatshot, size: 25, color: Color(0x99A2061E),),
+                        SizedBox(width: 8,),
+                        Text(
+                          'HOT FORUMS',
+                          style:
+                          TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -142,10 +166,16 @@ class _HomePageState extends State<HomePage> {
                 margin: EdgeInsets.only(top: 13, bottom: 20),
                 child: Column(
                   children: <Widget>[
-                    Text(
-                      'FRESH REVIEWS',
-                      style:
-                      TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
+                    Row(
+                      children: <Widget>[
+                        Icon(Icons.star, size: 25, color: Color(0x99A2061E),),
+                        SizedBox(width: 8,),
+                        Text(
+                          'FRESH REVIEWS',
+                          style:
+                          TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
+                        ),
+                      ],
                     ),
                   ],
                 ),

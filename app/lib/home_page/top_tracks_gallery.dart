@@ -18,9 +18,9 @@ class _TopTracksGalleryState extends State<TopTracksGallery> {
     images.add("images/handheld.jpg");
     List<String> track = new List<String>();
     track.add("Hard Ground");
-    track.add("Songs For Stran...");
+    track.add("Songs For Strangers yeah yeah yeah");
     track.add("Handheld");
-    track.add("Songs For Stran...");
+    track.add("Songs For Strangers");
     track.add("Handheld");
     List<String> band = new List<String>();
     band.add("Service Dog");
@@ -30,6 +30,7 @@ class _TopTracksGalleryState extends State<TopTracksGallery> {
     band.add("Phoneboy");
     for (var i = 0; i < images.length; i++) {
       children.add(Container(
+        width: MediaQuery.of(context).size.width *.428,
         padding: EdgeInsets.only(right: 0, left: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,6 +47,9 @@ class _TopTracksGalleryState extends State<TopTracksGallery> {
               child: Text(
                 track[i],
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                overflow: TextOverflow.fade,
+                maxLines: 1,
+                softWrap: false,
               ),
             ),
             Container(
