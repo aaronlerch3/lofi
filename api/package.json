@@ -8,6 +8,7 @@
   },
   "devDependencies": {},
   "scripts": {
+    "start": "go run src/*.go",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Joshua Schmidt",

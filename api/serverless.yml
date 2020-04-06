@@ -22,28 +22,7 @@ provider:
 plugins:
   - serverless-offline
 
-package:
-  exclude:
-    - ./**
-  include:
-    - ./bin/**
-
-functions:
-  auth:
-    handler: bin/auth
-    environment:
-      APP_CLIENT_ID: ${env:APP_CLIENT_ID}
-      USER_POOL_ID: ${env:USER_POOL_ID}
-  privateFunc:
-    handler: bin/privateFunc
-    events:
-      - http:
-          path: authenticated
-          method: get
-          cors: true
-          authorizer: auth
-
 # Create our resources with separate CloudFormation templates
 resources:
   # Cognito User Pool
-  - ${file(resources/cognito-user-pool.yml)}
+  - ${file(serverless-resources/cognito-user-pool.yml)}
