@@ -1,0 +1,10 @@
+# mutations
+
+type MutationRes {
+  Status: Int!
+  Message: String!
+}
+
+type Mutation {
+  createDiscussionThread(name: String!): MutationRes!
+}

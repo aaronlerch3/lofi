@@ -1,0 +1,178 @@
+# objects
+# https://gqlgen.com/getting-started/
+
+type Follow {
+  ID: ID!
+  User: ID!
+  FollowType: String!
+  Following: ID!
+}
+
+type Purchase {
+  ID: ID!
+  User: ID!
+  Type: String! # ticket or merch
+  itemID: ID! # ID of item purchased
+  Amount: Int! # how much they paID
+  StripeID: ID! # ID of purchase in stripe
+  Shipped: Boolean! # if item shipped
+  Received: Boolean! # if item was received
+}
+
+type Point { # global point values
+  Signup: Int!
+  Track: Int!
+  Recognition: Int!
+  JoinBand: Int!
+  Ticket: Int!
+  Merch: Int!
+  Donate: Int!
+  ForumMessage: Int!
+  Review: Int!
+}
+
+type Donation {
+  ID: ID!
+  User: ID!
+  Amount: Int!
+  StripeID: ID! # ID of purchase amount
+}
+
+type User {
+  ID: ID!
+  Username: String
+  Email: String
+  Name: String
+  Pages: [ID!]!
+  Recognition: [ID!]!
+  Location: String # gps coordinates
+  Tracks: [ID!] # **
+  Tickets: [ID!] # **
+  Forums: [ID!] # **
+  DirectMessageUsers: [ID!] # ** users you are currently in conversation with
+  DiscussionThreads: [ID!] # **
+  FollowingBands: [ID!] # ** bands you are following
+  FollowingUsers: [ID!] # ** users you are following
+  CountFollowing: Int! # number of users following you
+  Reviews: [ID!] # **
+  EmailVerified: Boolean!
+  Purchases: [ID!]
+  Donations: [ID!]
+  Points: Int!
+}
+
+type Review {
+  ID: ID!
+  ReviewedID: ID! # ID for track or album
+  Type: String!
+  User: ID! # user who reviewed the item
+  Rating: Int!
+  Content: String
+}
+
+type Album {
+  ID: ID!
+  Tracks: [ID!]!
+  Name: String!
+  PublishDate: Int!
+  CurrentRating: Int! # 0-5
+  Reviews: [ID!]!
+}
+
+type Track { # (music track)
+  ID: ID!
+  File: String!
+  Name: String!
+  Description: String!
+  Album: ID!
+  Recognition: [ID!]!
+  PlayCount: Int!
+}
+
+type Recognition {
+  ID: ID!
+  User: ID!
+  Track: ID!
+  Message: String!
+}
+
+type Merch {
+  ID: ID!
+  Price: ID!
+  InStock: Int!
+  StripeID: ID!
+  Purchases: [ID!]! # IDs of all purchases, shipped and not shipped
+}
+
+type Band { # (band page)
+  ID: ID!
+  Location: String! # gps coords
+  Name: String!
+  Users: [ID!]!
+  Albums: [ID!]!
+  Shows: [ID!]! # **
+  FollowerCount: Int!
+  Merch: [ID!]!
+}
+
+type Show {
+  ID: ID!
+  Date: Int!
+  Location: String! # gps coords
+  Bands: [ID!]!
+  Description: String!
+  Tickets: [ID!]!
+}
+
+type Ticket {
+  ID: ID!
+  Show: ID!
+  Type: String!
+  Price: Int!
+  StripeID: String!
+}
+
+type MessageVote {
+  ID: ID!
+  User: ID!
+  Vote: Boolean! # up = true / down = false
+  Type: String! # forum or discussion
+}
+
+type ForumMessage {
+  ID: ID!
+  forum: ID!
+  publishDate: Int!
+  Author: ID!
+  VotesUp: Int!
+  VotesDown: Int!
+}
+
+type ForumPage {
+  ID: ID!
+  Name: String!
+}
+
+type DiscussionThreadMessage {
+  ID: ID!
+  discussionThread: ID!
+  publishDate: Int!
+  Author: ID!
+  Replies: [ID!]! # of DiscussionThreadMessage objects
+  VotesUp: Int!
+  VotesDown: Int!
+}
+
+type DiscussionThread {
+  ID: ID!
+  Owner: ID!
+  Name: String
+}
+
+type DirectMessage {
+  ID: ID!
+  from: ID!
+  To: ID!
+  publishDate: Int!
+  message: String!
+}

@@ -7,7 +7,7 @@ require (
 	github.com/aws/aws-lambda-go v1.14.0
 	github.com/aws/aws-sdk-go v1.30.4
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
-	github.com/joho/godotenv v1.3.0 // indirect
+	github.com/joho/godotenv v1.3.0
 	github.com/lestrrat/go-jwx v0.0.0-20180221005942-b7d4802280ae
 	github.com/lestrrat/go-pdebug v0.0.0-20180220043741-569c97477ae8 // indirect
 	github.com/pkg/errors v0.9.1 // indirect

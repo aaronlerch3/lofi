@@ -2,19 +2,183 @@
 
 package model
 
-type NewTodo struct {
-	Text   string `json:"text"`
-	UserID string `json:"userId"`
+type Album struct {
+	ID            string   `json:"ID"`
+	Tracks        []string `json:"Tracks"`
+	Name          string   `json:"Name"`
+	PublishDate   int      `json:"PublishDate"`
+	CurrentRating int      `json:"CurrentRating"`
+	Reviews       []string `json:"Reviews"`
 }
 
-type Todo struct {
-	ID   string `json:"id"`
-	Text string `json:"text"`
-	Done bool   `json:"done"`
-	User *User  `json:"user"`
+type Band struct {
+	ID            string   `json:"ID"`
+	Location      string   `json:"Location"`
+	Name          string   `json:"Name"`
+	Users         []string `json:"Users"`
+	Albums        []string `json:"Albums"`
+	Shows         []string `json:"Shows"`
+	FollowerCount int      `json:"FollowerCount"`
+	Merch         []string `json:"Merch"`
+}
+
+type DirectMessage struct {
+	ID          string `json:"ID"`
+	From        string `json:"from"`
+	To          string `json:"To"`
+	PublishDate int    `json:"publishDate"`
+	Message     string `json:"message"`
+}
+
+type DiscussionThread struct {
+	ID    string  `json:"ID"`
+	Owner string  `json:"Owner"`
+	Name  *string `json:"Name"`
+}
+
+type DiscussionThreadMessage struct {
+	ID               string   `json:"ID"`
+	DiscussionThread string   `json:"discussionThread"`
+	PublishDate      int      `json:"publishDate"`
+	Author           string   `json:"Author"`
+	Replies          []string `json:"Replies"`
+	VotesUp          int      `json:"VotesUp"`
+	VotesDown        int      `json:"VotesDown"`
+}
+
+type Donation struct {
+	ID       string `json:"ID"`
+	User     string `json:"User"`
+	Amount   int    `json:"Amount"`
+	StripeID string `json:"StripeID"`
+}
+
+type Follow struct {
+	ID         string `json:"ID"`
+	User       string `json:"User"`
+	FollowType string `json:"FollowType"`
+	Following  string `json:"Following"`
+}
+
+type ForumMessage struct {
+	ID          string `json:"ID"`
+	Forum       string `json:"forum"`
+	PublishDate int    `json:"publishDate"`
+	Author      string `json:"Author"`
+	VotesUp     int    `json:"VotesUp"`
+	VotesDown   int    `json:"VotesDown"`
+}
+
+type ForumPage struct {
+	ID   string `json:"ID"`
+	Name string `json:"Name"`
+}
+
+type Merch struct {
+	ID        string   `json:"ID"`
+	Price     string   `json:"Price"`
+	InStock   int      `json:"InStock"`
+	StripeID  string   `json:"StripeID"`
+	Purchases []string `json:"Purchases"`
+}
+
+type MessageVote struct {
+	ID   string `json:"ID"`
+	User string `json:"User"`
+	Vote bool   `json:"Vote"`
+	Type string `json:"Type"`
+}
+
+type MutationRes struct {
+	Status  int    `json:"Status"`
+	Message string `json:"Message"`
+}
+
+type Point struct {
+	Signup       int `json:"Signup"`
+	Track        int `json:"Track"`
+	Recognition  int `json:"Recognition"`
+	JoinBand     int `json:"JoinBand"`
+	Ticket       int `json:"Ticket"`
+	Merch        int `json:"Merch"`
+	Donate       int `json:"Donate"`
+	ForumMessage int `json:"ForumMessage"`
+	Review       int `json:"Review"`
+}
+
+type Purchase struct {
+	ID       string `json:"ID"`
+	User     string `json:"User"`
+	Type     string `json:"Type"`
+	ItemID   string `json:"itemID"`
+	Amount   int    `json:"Amount"`
+	StripeID string `json:"StripeID"`
+	Shipped  bool   `json:"Shipped"`
+	Received bool   `json:"Received"`
+}
+
+type Recognition struct {
+	ID      string `json:"ID"`
+	User    string `json:"User"`
+	Track   string `json:"Track"`
+	Message string `json:"Message"`
+}
+
+type Review struct {
+	ID         string  `json:"ID"`
+	ReviewedID string  `json:"ReviewedID"`
+	Type       string  `json:"Type"`
+	User       string  `json:"User"`
+	Rating     int     `json:"Rating"`
+	Content    *string `json:"Content"`
+}
+
+type Show struct {
+	ID          string   `json:"ID"`
+	Date        int      `json:"Date"`
+	Location    string   `json:"Location"`
+	Bands       []string `json:"Bands"`
+	Description string   `json:"Description"`
+	Tickets     []string `json:"Tickets"`
+}
+
+type Ticket struct {
+	ID       string `json:"ID"`
+	Show     string `json:"Show"`
+	Type     string `json:"Type"`
+	Price    int    `json:"Price"`
+	StripeID string `json:"StripeID"`
+}
+
+type Track struct {
+	ID          string   `json:"ID"`
+	File        string   `json:"File"`
+	Name        string   `json:"Name"`
+	Description string   `json:"Description"`
+	Album       string   `json:"Album"`
+	Recognition []string `json:"Recognition"`
+	PlayCount   int      `json:"PlayCount"`
 }
 
 type User struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
+	ID                 string   `json:"ID"`
+	Username           *string  `json:"Username"`
+	Email              *string  `json:"Email"`
+	Name               *string  `json:"Name"`
+	Pages              []string `json:"Pages"`
+	Recognition        []string `json:"Recognition"`
+	Location           *string  `json:"Location"`
+	Tracks             []string `json:"Tracks"`
+	Tickets            []string `json:"Tickets"`
+	Forums             []string `json:"Forums"`
+	DirectMessageUsers []string `json:"DirectMessageUsers"`
+	DiscussionThreads  []string `json:"DiscussionThreads"`
+	FollowingBands     []string `json:"FollowingBands"`
+	FollowingUsers     []string `json:"FollowingUsers"`
+	CountFollowing     int      `json:"CountFollowing"`
+	Reviews            []string `json:"Reviews"`
+	EmailVerified      bool     `json:"EmailVerified"`
+	Purchases          []string `json:"Purchases"`
+	Donations          []string `json:"Donations"`
+	Points             int      `json:"Points"`
 }

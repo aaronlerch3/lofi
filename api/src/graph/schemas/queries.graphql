@@ -1,0 +1,6 @@
+# queries
+
+type Query {
+  users: [User!]!
+  hello: String!
+}
