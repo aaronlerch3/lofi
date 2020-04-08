@@ -14,7 +14,6 @@ input CreateUserInput {
 
 input UpdateUserInput {
   Name: String!
-  Username: String!
   Password: String!
   Email: String!
 }

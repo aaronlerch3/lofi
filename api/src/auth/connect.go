@@ -16,7 +16,7 @@ type CognitoClient struct {
 }
 
 // Client auth client
-var Client CognitoClient
+var Client *CognitoClient
 
 var AuthName = "asdf"
 
@@ -25,7 +25,7 @@ var ClientName = "test123"
 // InitializeAuth initializes cognito
 func InitializeAuth() error {
 	client := cognito.New(utils.AWSSession)
-	Client = CognitoClient{
+	Client = &CognitoClient{
 		CognitoClient: client,
 	}
 	foundAuth, poolID, err := checkAuthExists()
@@ -49,7 +49,17 @@ func InitializeAuth() error {
 			return err
 		}
 	} else {
-
+		var clientExists bool
+		clientExists, AppClientID, err = checkAuthClientExists(poolID)
+		if err != nil {
+			return err
+		}
+		if !clientExists {
+			AppClientID, err = createAuthClient(poolID)
+			if err != nil {
+				return err
+			}
+		}
 	}
 	Client.UserPoolID = poolID
 	Client.AppClientID = AppClientID

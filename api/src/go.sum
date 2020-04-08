@@ -3,6 +3,7 @@ github.com/99designs/gqlgen v0.11.3/go.mod h1:RgX5GRRdDWNkh4pBrdzNpNPFVsdoUFY2+a
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/aaronlerch3/lofi v0.0.0-20200402212937-f9775cb05ac0 h1:v5VM1UUdHIGex00cHTOG4qOLUbRTGBABcqratEgBQKI=
 github.com/aaronlerch3/lofi v0.0.0-20200405052809-59ad005cae34 h1:O0Lq/7G+afcgj8yRgSFKqPaYynILvuwYt18QVuxa9Hc=
+github.com/aaronlerch3/lofi v0.0.0-20200408205543-e49b328f8dbc h1:/p6HdSbN69qYBccMMQBPm5i9/+tqjg2Vav1DT8YXOGQ=
 github.com/agnivade/levenshtein v1.0.1/go.mod h1:CURSv5d9Uaml+FovSIICkLbAUZ9S4RqaHDIsdSBg7lM=
 github.com/agnivade/levenshtein v1.0.3 h1:M5ZnqLOoZR8ygVq0FfkXsNOKzMCk0xRiow0R5+5VkQ0=
 github.com/agnivade/levenshtein v1.0.3/go.mod h1:4SFRZbbXWLF4MU1T9Qg0pGgH3Pjs+t6ie5efyrwRJXs=

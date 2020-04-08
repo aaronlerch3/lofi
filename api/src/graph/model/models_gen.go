@@ -22,6 +22,13 @@ type Band struct {
 	Merch         []string `json:"Merch"`
 }
 
+type CreateUserInput struct {
+	Name     string `json:"Name"`
+	Username string `json:"Username"`
+	Password string `json:"Password"`
+	Email    string `json:"Email"`
+}
+
 type DirectMessage struct {
 	ID          string `json:"ID"`
 	From        string `json:"from"`
@@ -158,6 +165,13 @@ type Track struct {
 	Album       string   `json:"Album"`
 	Recognition []string `json:"Recognition"`
 	PlayCount   int      `json:"PlayCount"`
+}
+
+type UpdateUserInput struct {
+	Name     string `json:"Name"`
+	Username string `json:"Username"`
+	Password string `json:"Password"`
+	Email    string `json:"Email"`
 }
 
 type User struct {
