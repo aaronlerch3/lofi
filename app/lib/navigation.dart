@@ -1,4 +1,4 @@
-import 'package:lofi/discover_page.dart';
+import 'package:lofi/discover_page/discover_page.dart';
 import 'package:lofi/home_page/messages.dart';
 import 'package:lofi/icons.dart';
 import 'package:flutter/cupertino.dart';
@@ -42,11 +42,11 @@ class _NavigationState extends State<Navigation> {
         ),
         title: new Icon(
           CustomIcons.logo,
-          size: 40,
+          size: 45,
         ),
         actions: <Widget>[
           new IconButton(
-            icon: Icon(Icons.message, size: 32, color: Color(0xFFF7F3E3)),
+            icon: Icon(Icons.mode_comment, size: 30, color: Color(0xFFF7F3E3)),
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => Messages()));
             },
