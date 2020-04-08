@@ -1,3 +1,5 @@
+import 'package:lofi/discover_page/new_artists_gallery.dart';
+import 'package:lofi/discover_page/undiscovered_tracks_list.dart';
 import 'package:lofi/icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -53,9 +55,7 @@ class _DiscoverState extends State<Discover> {
                   ),
                   child: TextField(
                     decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Search'
-                    ),
+                        border: InputBorder.none, hintText: 'Search'),
                   ),
                 ),
               ],
@@ -253,13 +253,16 @@ class _DiscoverState extends State<Discover> {
                               children: <Widget>[
                                 Expanded(
                                   child: Container(
+                                    height: 110,
                                     margin: EdgeInsets.only(
                                         left: 15, right: 15, top: 5, bottom: 5),
                                     child: Text(
-                                      'Ricky Dana, hailing from New Jersey and James Fusco and Wyn Barnum hailing from California combine forces on Phoneboy, an indie-pop force to be reckoned with. Blending mellow indie-pop and hypnagogic-pop roots with their punk and progressive rock...',
+                                      'Ricky Dana, hailing from New Jersey and James Fusco and Wyn Barnum hailing from California combine forces on Phoneboy, an indie-pop force to be reckoned with. Blending mellow indie-pop and hypnagogic-pop roots with their punk and progressive rock oh no my undies are utterly soiled I think im going to ahhhhh',
                                       style: TextStyle(
-                                          fontSize: 14.3,
+                                          fontSize: 15.5,
                                           fontWeight: FontWeight.w400),
+                                      overflow: TextOverflow.fade,
+                                      softWrap: true,
                                     ),
                                   ),
                                 ),
@@ -275,219 +278,52 @@ class _DiscoverState extends State<Discover> {
             ],
           ),
           Container(
-            margin: EdgeInsets.only(right: 20, left: 15),
-            child: Column(
+            margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'NEW ARTISTS',
-                      style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xFFA2061E)),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(top: 20, bottom: 20, right: 20),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(width: 3, color: Color(0x80A2061E)),
-                        image: DecorationImage(
-                            image: AssetImage('images/wyn.jpg'),
-                            fit: BoxFit.cover),
-                      ),
-                      height: 130,
-                      width: 130,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        FittedBox(
-                          fit: BoxFit.fitWidth,
-                          child: Text(
-                            'BEEKEEPER',
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                                color: Color(0xFFA2061E)),
-                          ),
-                        ),
-                        Text(
-                          'Hoboken, NJ',
-                          style: TextStyle(
-                              fontSize: 13, fontWeight: FontWeight.w700),
-                        ),
-                        Text(
-                          '0.1 mi',
-                          style: TextStyle(
-                              fontSize: 13, fontWeight: FontWeight.w300),
-                        ),
-                      ],
-                    ),
-                    Spacer(
-                      flex: 3,
-                    ),
-                    Column(
-                      children: <Widget>[
-                        Icon(
-                          CustomIcons.trending,
-                          color: Color(0xFFA2061E),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(top: 0, bottom: 0, right: 20),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(width: 3, color: Color(0x80A2061E)),
-                        image: DecorationImage(
-                            image: AssetImage('images/wyn.jpg'),
-                            fit: BoxFit.cover),
-                      ),
-                      height: 130,
-                      width: 130,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        FittedBox(
-                          fit: BoxFit.fitWidth,
-                          child: Text(
-                            'BEHIND THE CURTAIN',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                color: Color(0xFFA2061E)),
-                          ),
-                        ),
-                        Text(
-                          'Hoboken, NJ',
-                          style: TextStyle(
-                              fontSize: 13, fontWeight: FontWeight.w700),
-                        ),
-                        Text(
-                          '0.1 mi',
-                          style: TextStyle(
-                              fontSize: 13, fontWeight: FontWeight.w300),
-                        ),
-                      ],
-                    ),
-                    Spacer(
-                      flex: 3,
-                    ),
-                    Column(
-                      children: <Widget>[
-                        Icon(
-                          CustomIcons.trending,
-                          color: Color(0xFFA2061E),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(top: 20, bottom: 20, right: 20),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(width: 3, color: Color(0x80A2061E)),
-                        image: DecorationImage(
-                            image: AssetImage('images/wyn.jpg'),
-                            fit: BoxFit.cover),
-                      ),
-                      height: 75,
-                      width: 75,
-                    ),
-                    Text(
-                      'Example 1',
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
-                    ),
-                    Spacer(),
-                    Column(
-                      children: <Widget>[
-                        Icon(
-                          CustomIcons.trending,
-                          color: Color(0xFFA2061E),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(top: 0, bottom: 0, right: 20),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(width: 3, color: Color(0x80A2061E)),
-                        image: DecorationImage(
-                            image: AssetImage('images/wyn.jpg'),
-                            fit: BoxFit.cover),
-                      ),
-                      height: 75,
-                      width: 75,
-                    ),
-                    Text(
-                      'Example 2',
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
-                    ),
-                    Spacer(),
-                    Column(
-                      children: <Widget>[
-                        Icon(
-                          CustomIcons.trending,
-                          color: Color(0xFFA2061E),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(top: 20, bottom: 20, right: 20),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(width: 3, color: Color(0x80A2061E)),
-                        image: DecorationImage(
-                            image: AssetImage('images/wyn.jpg'),
-                            fit: BoxFit.cover),
-                      ),
-                      height: 75,
-                      width: 75,
-                    ),
-                    Text(
-                      'Example 3',
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
-                    ),
-                    Spacer(),
-                    Column(
-                      children: <Widget>[
-                        Icon(
-                          CustomIcons.trending,
-                          color: Color(0xFFA2061E),
-                        ),
-                      ],
-                    ),
-                  ],
+                Text(
+                  'UNDISCOVERED TRACKS',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                      color: Color(0xFFA2061E)),
                 ),
               ],
             ),
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height * .282,
+            margin: EdgeInsets.only(left: 0, bottom: 10),
+            child: ListView(
+              physics: BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              children: <Widget>[
+                UndiscoveredTracksList(),
+                SizedBox(
+                  width: 15,
+                )
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 15, right: 15, top: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'NEW ARTISTS',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                      color: Color(0xFFA2061E)),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 15, right: 15, top: 10),
+            child: NewArtistsGallery(),
           ),
         ],
       ),

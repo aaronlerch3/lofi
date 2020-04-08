@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
                       width: 8,
                     ),
                     Text(
-                      'TOP TRACKS NOW',
+                      'TOP TRACKS',
                       style:
                           TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
                     ),
