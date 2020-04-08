@@ -5,6 +5,24 @@ type MutationRes {
   Message: String!
 }
 
+input CreateUserInput {
+  Name: String!
+  Username: String!
+  Password: String!
+  Email: String!
+}
+
+input UpdateUserInput {
+  Name: String!
+  Username: String!
+  Password: String!
+  Email: String!
+}
+
 type Mutation {
   createDiscussionThread(name: String!): MutationRes!
+  createUser(input: CreateUserInput): MutationRes!
+  updateUser(input: UpdateUserInput): MutationRes!
+  deleteUser: MutationRes!
+  login(username: String!, password: String!): MutationRes!
 }
