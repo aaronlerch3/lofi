@@ -6,13 +6,10 @@ package graph
 import (
 	"context"
 	"fmt"
+	"net/http"
 
-	"github.com/aaronlerch3/lofi/api/auth"
 	"github.com/aaronlerch3/lofi/api/graph/generated"
 	"github.com/aaronlerch3/lofi/api/graph/model"
-	"github.com/aaronlerch3/lofi/api/utils"
-	"github.com/aws/aws-sdk-go/aws"
-	cognito "github.com/aws/aws-sdk-go/service/cognitoidentityprovider"
 )
 
 func (r *mutationResolver) CreateDiscussionThread(ctx context.Context, name string) (*model.MutationRes, error) {
@@ -20,31 +17,9 @@ func (r *mutationResolver) CreateDiscussionThread(ctx context.Context, name stri
 }
 
 func (r *mutationResolver) CreateUser(ctx context.Context, input *model.CreateUserInput) (*model.MutationRes, error) {
-	userCreateRes, err := auth.Client.CognitoClient.SignUp(&cognito.SignUpInput{
-		Username: aws.String(input.Username),
-		Password: aws.String(input.Password),
-		ClientId: aws.String(*auth.Client.AppClientID),
-		UserAttributes: []*cognito.AttributeType{
-			{
-				Name:  aws.String("name"),
-				Value: aws.String(input.Name),
-			},
-		},
-	})
-	if err != nil {
-		utils.Logger.Info("got error: " + err.Error())
-		return nil, err
-	}
-	// save user to database
-	/*
-		user := &model.User{
-			Name:     &input.Name,
-			Username: &input.Username,
-		}
-	*/
 	mutationRes := &model.MutationRes{
-		Message: "Created user " + *userCreateRes.UserSub,
-		Status:  200,
+		Message: "Created user",
+		Status:  http.StatusOK,
 	}
 	return mutationRes, nil
 }

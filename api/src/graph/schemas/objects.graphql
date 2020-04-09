@@ -2,14 +2,14 @@
 # https://gqlgen.com/getting-started/
 
 type Follow {
-  ID: ID!
+  _id: ID!
   User: ID!
   FollowType: String!
   Following: ID!
 }
 
 type Purchase {
-  ID: ID!
+  _id: ID!
   User: ID!
   Type: String! # ticket or merch
   itemID: ID! # ID of item purchased
@@ -19,7 +19,15 @@ type Purchase {
   Received: Boolean! # if item was received
 }
 
-type Point { # global point values
+type Donation {
+  _id: ID!
+  User: ID!
+  Amount: Int!
+  StripeID: ID! # ID of purchase amount
+}
+
+type Points { # global point values
+  Total: Int!
   Signup: Int!
   Track: Int!
   Recognition: Int!
@@ -31,15 +39,8 @@ type Point { # global point values
   Review: Int!
 }
 
-type Donation {
-  ID: ID!
-  User: ID!
-  Amount: Int!
-  StripeID: ID! # ID of purchase amount
-}
-
 type User {
-  ID: ID!
+  _id: ID!
   Username: String
   Email: String
   Name: String
@@ -58,11 +59,11 @@ type User {
   EmailVerified: Boolean!
   Purchases: [ID!]
   Donations: [ID!]
-  Points: Int!
+  Points: Points!
 }
 
 type Review {
-  ID: ID!
+  _id: ID!
   ReviewedID: ID! # ID for track or album
   Type: String!
   User: ID! # user who reviewed the item
@@ -71,7 +72,7 @@ type Review {
 }
 
 type Album {
-  ID: ID!
+  _id: ID!
   Tracks: [ID!]!
   Name: String!
   PublishDate: Int!
@@ -80,7 +81,7 @@ type Album {
 }
 
 type Track { # (music track)
-  ID: ID!
+  _id: ID!
   File: String!
   Name: String!
   Description: String!
@@ -90,14 +91,14 @@ type Track { # (music track)
 }
 
 type Recognition {
-  ID: ID!
+  _id: ID!
   User: ID!
   Track: ID!
   Message: String!
 }
 
 type Merch {
-  ID: ID!
+  _id: ID!
   Price: ID!
   InStock: Int!
   StripeID: ID!
@@ -105,7 +106,7 @@ type Merch {
 }
 
 type Band { # (band page)
-  ID: ID!
+  _id: ID!
   Location: String! # gps coords
   Name: String!
   Users: [ID!]!
@@ -116,7 +117,7 @@ type Band { # (band page)
 }
 
 type Show {
-  ID: ID!
+  _id: ID!
   Date: Int!
   Location: String! # gps coords
   Bands: [ID!]!
@@ -125,7 +126,7 @@ type Show {
 }
 
 type Ticket {
-  ID: ID!
+  _id: ID!
   Show: ID!
   Type: String!
   Price: Int!
@@ -133,14 +134,14 @@ type Ticket {
 }
 
 type MessageVote {
-  ID: ID!
+  _id: ID!
   User: ID!
   Vote: Boolean! # up = true / down = false
   Type: String! # forum or discussion
 }
 
 type ForumMessage {
-  ID: ID!
+  _id: ID!
   forum: ID!
   publishDate: Int!
   Author: ID!
@@ -149,12 +150,12 @@ type ForumMessage {
 }
 
 type ForumPage {
-  ID: ID!
+  _id: ID!
   Name: String!
 }
 
 type DiscussionThreadMessage {
-  ID: ID!
+  _id: ID!
   discussionThread: ID!
   publishDate: Int!
   Author: ID!
@@ -164,13 +165,13 @@ type DiscussionThreadMessage {
 }
 
 type DiscussionThread {
-  ID: ID!
+  _id: ID!
   Owner: ID!
   Name: String
 }
 
 type DirectMessage {
-  ID: ID!
+  _id: ID!
   from: ID!
   To: ID!
   publishDate: Int!

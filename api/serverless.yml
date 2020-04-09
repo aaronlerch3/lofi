@@ -21,8 +21,3 @@ provider:
 
 plugins:
   - serverless-offline
-
-# Create our resources with separate CloudFormation templates
-resources:
-  # Cognito User Pool
-  - ${file(serverless-resources/cognito-user-pool.yml)}
