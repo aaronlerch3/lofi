@@ -1,17 +1,10 @@
 package utils
 
 import (
-	"os"
+	"github.com/aaronlerch3/lofi/api/env"
 )
-
-var mode string
 
 // IsDebug check if in debug mode
 func IsDebug() bool {
-	return mode == "debug"
-}
-
-// SetMode set process mode
-func SetMode() {
-	mode = os.Getenv("MODE")
+	return env.Mode == "debug"
 }

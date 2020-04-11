@@ -6,8 +6,8 @@ package graph
 import (
 	"context"
 	"fmt"
-	"net/http"
 
+	"github.com/aaronlerch3/lofi/api/auth"
 	"github.com/aaronlerch3/lofi/api/graph/generated"
 	"github.com/aaronlerch3/lofi/api/graph/model"
 )
@@ -16,12 +16,16 @@ func (r *mutationResolver) CreateDiscussionThread(ctx context.Context, name stri
 	panic(fmt.Errorf("not implemented"))
 }
 
+func (r *mutationResolver) LoginFacebook(ctx context.Context, token string) (*model.MutationRes, error) {
+	return auth.LoginFacebook(ctx, token)
+}
+
+func (r *mutationResolver) LoginGoogle(ctx context.Context, token string) (*model.MutationRes, error) {
+	return auth.LoginGoogle(ctx, token)
+}
+
 func (r *mutationResolver) CreateUser(ctx context.Context, input *model.CreateUserInput) (*model.MutationRes, error) {
-	mutationRes := &model.MutationRes{
-		Message: "Created user",
-		Status:  http.StatusOK,
-	}
-	return mutationRes, nil
+	return auth.CreateUser(ctx, input)
 }
 
 func (r *mutationResolver) UpdateUser(ctx context.Context, input *model.UpdateUserInput) (*model.MutationRes, error) {

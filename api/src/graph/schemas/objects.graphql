@@ -41,9 +41,12 @@ type Points { # global point values
 
 type User {
   _id: ID!
-  Username: String
-  Email: String
-  Name: String
+  AuthType: String!
+  UserType: String!
+  CurrentPlan: String! # lofi purchased plan
+  Email: String!
+  Name: String!
+  Password: String
   Pages: [ID!]!
   Recognition: [ID!]!
   Location: String # gps coordinates

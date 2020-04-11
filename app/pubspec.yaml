@@ -17,6 +17,15 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  # authentication
+  google_sign_in: ^4.4.1
+  flutter_twitter: ^1.1.3
+  flutter_facebook_login: ^3.0.0
+  flutter_signin_button: ^1.0.0
+
+  # global state
+  flutter_redux: ^0.6.0
+  redux_thunk: ^0.3.0
 
   custom_navigator: ^0.2.0
 
@@ -30,7 +39,6 @@ dependencies:
 
   flutter_dotenv: ^2.1.0
   shared_preferences: ^0.5.6+2
-  amazon_cognito_identity_dart_2: ^0.1.9
 
 dev_dependencies:
   flutter_test:

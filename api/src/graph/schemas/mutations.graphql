@@ -20,6 +20,8 @@ input UpdateUserInput {
 
 type Mutation {
   createDiscussionThread(name: String!): MutationRes!
+  loginFacebook(token: String!): MutationRes!
+  loginGoogle(token: String!): MutationRes!
   createUser(input: CreateUserInput): MutationRes!
   updateUser(input: UpdateUserInput): MutationRes!
   deleteUser: MutationRes!

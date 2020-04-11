@@ -1,5 +1,3 @@
-import 'package:amazon_cognito_identity_dart_2/cognito.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,10 +10,6 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
-    final userPool = new CognitoUserPool(
-      DotEnv().env['USER_POOL_ID'],
-      DotEnv().env['APP_CLIENT_ID'],
-    );
     final nameController = TextEditingController();
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
@@ -94,20 +88,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                         // Validate returns true if the form is valid, or false
                         // otherwise.
                         if (_formKey.currentState.validate()) {
-                          // If the form is valid, display a Snackbar
-                          final userAttributes = [
-                            new AttributeArg(name: 'name', value: nameController.text),
-                          ];
-                            userPool.signUp(
-                              emailController.text,
-                              passwordController.text,
-                              userAttributes: userAttributes,
-                            ).then((data) {
-                              Scaffold.of(context).showSnackBar(
-                                  SnackBar(content: Text('User registered!')));
-                            }, onError: (err) {
-                              print(err);
-                            });
+                          print("valid form");
                         }
                       },
                       child: Text('Submit'),

@@ -3,7 +3,7 @@
 package model
 
 type Album struct {
-	ID            string   `json:"ID"`
+	ID            string   `json:"_id"`
 	Tracks        []string `json:"Tracks"`
 	Name          string   `json:"Name"`
 	PublishDate   int      `json:"PublishDate"`
@@ -12,7 +12,7 @@ type Album struct {
 }
 
 type Band struct {
-	ID            string   `json:"ID"`
+	ID            string   `json:"_id"`
 	Location      string   `json:"Location"`
 	Name          string   `json:"Name"`
 	Users         []string `json:"Users"`
@@ -30,7 +30,7 @@ type CreateUserInput struct {
 }
 
 type DirectMessage struct {
-	ID          string `json:"ID"`
+	ID          string `json:"_id"`
 	From        string `json:"from"`
 	To          string `json:"To"`
 	PublishDate int    `json:"publishDate"`
@@ -38,13 +38,13 @@ type DirectMessage struct {
 }
 
 type DiscussionThread struct {
-	ID    string  `json:"ID"`
+	ID    string  `json:"_id"`
 	Owner string  `json:"Owner"`
 	Name  *string `json:"Name"`
 }
 
 type DiscussionThreadMessage struct {
-	ID               string   `json:"ID"`
+	ID               string   `json:"_id"`
 	DiscussionThread string   `json:"discussionThread"`
 	PublishDate      int      `json:"publishDate"`
 	Author           string   `json:"Author"`
@@ -54,21 +54,21 @@ type DiscussionThreadMessage struct {
 }
 
 type Donation struct {
-	ID       string `json:"ID"`
+	ID       string `json:"_id"`
 	User     string `json:"User"`
 	Amount   int    `json:"Amount"`
 	StripeID string `json:"StripeID"`
 }
 
 type Follow struct {
-	ID         string `json:"ID"`
+	ID         string `json:"_id"`
 	User       string `json:"User"`
 	FollowType string `json:"FollowType"`
 	Following  string `json:"Following"`
 }
 
 type ForumMessage struct {
-	ID          string `json:"ID"`
+	ID          string `json:"_id"`
 	Forum       string `json:"forum"`
 	PublishDate int    `json:"publishDate"`
 	Author      string `json:"Author"`
@@ -77,12 +77,12 @@ type ForumMessage struct {
 }
 
 type ForumPage struct {
-	ID   string `json:"ID"`
+	ID   string `json:"_id"`
 	Name string `json:"Name"`
 }
 
 type Merch struct {
-	ID        string   `json:"ID"`
+	ID        string   `json:"_id"`
 	Price     string   `json:"Price"`
 	InStock   int      `json:"InStock"`
 	StripeID  string   `json:"StripeID"`
@@ -90,7 +90,7 @@ type Merch struct {
 }
 
 type MessageVote struct {
-	ID   string `json:"ID"`
+	ID   string `json:"_id"`
 	User string `json:"User"`
 	Vote bool   `json:"Vote"`
 	Type string `json:"Type"`
@@ -101,7 +101,8 @@ type MutationRes struct {
 	Message string `json:"Message"`
 }
 
-type Point struct {
+type Points struct {
+	Total        int `json:"Total"`
 	Signup       int `json:"Signup"`
 	Track        int `json:"Track"`
 	Recognition  int `json:"Recognition"`
@@ -114,7 +115,7 @@ type Point struct {
 }
 
 type Purchase struct {
-	ID       string `json:"ID"`
+	ID       string `json:"_id"`
 	User     string `json:"User"`
 	Type     string `json:"Type"`
 	ItemID   string `json:"itemID"`
@@ -125,14 +126,14 @@ type Purchase struct {
 }
 
 type Recognition struct {
-	ID      string `json:"ID"`
+	ID      string `json:"_id"`
 	User    string `json:"User"`
 	Track   string `json:"Track"`
 	Message string `json:"Message"`
 }
 
 type Review struct {
-	ID         string  `json:"ID"`
+	ID         string  `json:"_id"`
 	ReviewedID string  `json:"ReviewedID"`
 	Type       string  `json:"Type"`
 	User       string  `json:"User"`
@@ -141,7 +142,7 @@ type Review struct {
 }
 
 type Show struct {
-	ID          string   `json:"ID"`
+	ID          string   `json:"_id"`
 	Date        int      `json:"Date"`
 	Location    string   `json:"Location"`
 	Bands       []string `json:"Bands"`
@@ -150,7 +151,7 @@ type Show struct {
 }
 
 type Ticket struct {
-	ID       string `json:"ID"`
+	ID       string `json:"_id"`
 	Show     string `json:"Show"`
 	Type     string `json:"Type"`
 	Price    int    `json:"Price"`
@@ -158,7 +159,7 @@ type Ticket struct {
 }
 
 type Track struct {
-	ID          string   `json:"ID"`
+	ID          string   `json:"_id"`
 	File        string   `json:"File"`
 	Name        string   `json:"Name"`
 	Description string   `json:"Description"`
@@ -169,16 +170,18 @@ type Track struct {
 
 type UpdateUserInput struct {
 	Name     string `json:"Name"`
-	Username string `json:"Username"`
 	Password string `json:"Password"`
 	Email    string `json:"Email"`
 }
 
 type User struct {
-	ID                 string   `json:"ID"`
-	Username           *string  `json:"Username"`
-	Email              *string  `json:"Email"`
-	Name               *string  `json:"Name"`
+	ID                 string   `json:"_id"`
+	AuthType           string   `json:"AuthType"`
+	UserType           string   `json:"UserType"`
+	CurrentPlan        string   `json:"CurrentPlan"`
+	Email              string   `json:"Email"`
+	Name               string   `json:"Name"`
+	Password           *string  `json:"Password"`
 	Pages              []string `json:"Pages"`
 	Recognition        []string `json:"Recognition"`
 	Location           *string  `json:"Location"`
@@ -194,5 +197,5 @@ type User struct {
 	EmailVerified      bool     `json:"EmailVerified"`
 	Purchases          []string `json:"Purchases"`
 	Donations          []string `json:"Donations"`
-	Points             int      `json:"Points"`
+	Points             *Points  `json:"Points"`
 }

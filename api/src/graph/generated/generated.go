@@ -135,6 +135,8 @@ type ComplexityRoot struct {
 		CreateUser             func(childComplexity int, input *model.CreateUserInput) int
 		DeleteUser             func(childComplexity int) int
 		Login                  func(childComplexity int, username string, password string) int
+		LoginFacebook          func(childComplexity int, token string) int
+		LoginGoogle            func(childComplexity int, token string) int
 		UpdateUser             func(childComplexity int, input *model.UpdateUserInput) int
 	}
 
@@ -143,7 +145,7 @@ type ComplexityRoot struct {
 		Status  func(childComplexity int) int
 	}
 
-	Point struct {
+	Points struct {
 		Donate       func(childComplexity int) int
 		ForumMessage func(childComplexity int) int
 		JoinBand     func(childComplexity int) int
@@ -152,6 +154,7 @@ type ComplexityRoot struct {
 		Review       func(childComplexity int) int
 		Signup       func(childComplexity int) int
 		Ticket       func(childComplexity int) int
+		Total        func(childComplexity int) int
 		Track        func(childComplexity int) int
 	}
 
@@ -215,7 +218,9 @@ type ComplexityRoot struct {
 	}
 
 	User struct {
+		AuthType           func(childComplexity int) int
 		CountFollowing     func(childComplexity int) int
+		CurrentPlan        func(childComplexity int) int
 		DirectMessageUsers func(childComplexity int) int
 		DiscussionThreads  func(childComplexity int) int
 		Donations          func(childComplexity int) int
@@ -228,18 +233,21 @@ type ComplexityRoot struct {
 		Location           func(childComplexity int) int
 		Name               func(childComplexity int) int
 		Pages              func(childComplexity int) int
+		Password           func(childComplexity int) int
 		Points             func(childComplexity int) int
 		Purchases          func(childComplexity int) int
 		Recognition        func(childComplexity int) int
 		Reviews            func(childComplexity int) int
 		Tickets            func(childComplexity int) int
 		Tracks             func(childComplexity int) int
-		Username           func(childComplexity int) int
+		UserType           func(childComplexity int) int
 	}
 }
 
 type MutationResolver interface {
 	CreateDiscussionThread(ctx context.Context, name string) (*model.MutationRes, error)
+	LoginFacebook(ctx context.Context, token string) (*model.MutationRes, error)
+	LoginGoogle(ctx context.Context, token string) (*model.MutationRes, error)
 	CreateUser(ctx context.Context, input *model.CreateUserInput) (*model.MutationRes, error)
 	UpdateUser(ctx context.Context, input *model.UpdateUserInput) (*model.MutationRes, error)
 	DeleteUser(ctx context.Context) (*model.MutationRes, error)
@@ -272,7 +280,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Album.CurrentRating(childComplexity), true
 
-	case "Album.ID":
+	case "Album._id":
 		if e.complexity.Album.ID == nil {
 			break
 		}
@@ -321,7 +329,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Band.FollowerCount(childComplexity), true
 
-	case "Band.ID":
+	case "Band._id":
 		if e.complexity.Band.ID == nil {
 			break
 		}
@@ -370,7 +378,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.DirectMessage.From(childComplexity), true
 
-	case "DirectMessage.ID":
+	case "DirectMessage._id":
 		if e.complexity.DirectMessage.ID == nil {
 			break
 		}
@@ -398,7 +406,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.DirectMessage.To(childComplexity), true
 
-	case "DiscussionThread.ID":
+	case "DiscussionThread._id":
 		if e.complexity.DiscussionThread.ID == nil {
 			break
 		}
@@ -433,7 +441,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.DiscussionThreadMessage.DiscussionThread(childComplexity), true
 
-	case "DiscussionThreadMessage.ID":
+	case "DiscussionThreadMessage._id":
 		if e.complexity.DiscussionThreadMessage.ID == nil {
 			break
 		}
@@ -475,7 +483,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Donation.Amount(childComplexity), true
 
-	case "Donation.ID":
+	case "Donation._id":
 		if e.complexity.Donation.ID == nil {
 			break
 		}
@@ -510,7 +518,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Follow.Following(childComplexity), true
 
-	case "Follow.ID":
+	case "Follow._id":
 		if e.complexity.Follow.ID == nil {
 			break
 		}
@@ -538,7 +546,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ForumMessage.Forum(childComplexity), true
 
-	case "ForumMessage.ID":
+	case "ForumMessage._id":
 		if e.complexity.ForumMessage.ID == nil {
 			break
 		}
@@ -566,7 +574,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ForumMessage.VotesUp(childComplexity), true
 
-	case "ForumPage.ID":
+	case "ForumPage._id":
 		if e.complexity.ForumPage.ID == nil {
 			break
 		}
@@ -580,7 +588,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ForumPage.Name(childComplexity), true
 
-	case "Merch.ID":
+	case "Merch._id":
 		if e.complexity.Merch.ID == nil {
 			break
 		}
@@ -615,7 +623,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Merch.StripeID(childComplexity), true
 
-	case "MessageVote.ID":
+	case "MessageVote._id":
 		if e.complexity.MessageVote.ID == nil {
 			break
 		}
@@ -686,6 +694,30 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.Login(childComplexity, args["username"].(string), args["password"].(string)), true
 
+	case "Mutation.loginFacebook":
+		if e.complexity.Mutation.LoginFacebook == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_loginFacebook_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.LoginFacebook(childComplexity, args["token"].(string)), true
+
+	case "Mutation.loginGoogle":
+		if e.complexity.Mutation.LoginGoogle == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_loginGoogle_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.LoginGoogle(childComplexity, args["token"].(string)), true
+
 	case "Mutation.updateUser":
 		if e.complexity.Mutation.UpdateUser == nil {
 			break
@@ -712,68 +744,75 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.MutationRes.Status(childComplexity), true
 
-	case "Point.Donate":
-		if e.complexity.Point.Donate == nil {
+	case "Points.Donate":
+		if e.complexity.Points.Donate == nil {
 			break
 		}
 
-		return e.complexity.Point.Donate(childComplexity), true
+		return e.complexity.Points.Donate(childComplexity), true
 
-	case "Point.ForumMessage":
-		if e.complexity.Point.ForumMessage == nil {
+	case "Points.ForumMessage":
+		if e.complexity.Points.ForumMessage == nil {
 			break
 		}
 
-		return e.complexity.Point.ForumMessage(childComplexity), true
+		return e.complexity.Points.ForumMessage(childComplexity), true
 
-	case "Point.JoinBand":
-		if e.complexity.Point.JoinBand == nil {
+	case "Points.JoinBand":
+		if e.complexity.Points.JoinBand == nil {
 			break
 		}
 
-		return e.complexity.Point.JoinBand(childComplexity), true
+		return e.complexity.Points.JoinBand(childComplexity), true
 
-	case "Point.Merch":
-		if e.complexity.Point.Merch == nil {
+	case "Points.Merch":
+		if e.complexity.Points.Merch == nil {
 			break
 		}
 
-		return e.complexity.Point.Merch(childComplexity), true
+		return e.complexity.Points.Merch(childComplexity), true
 
-	case "Point.Recognition":
-		if e.complexity.Point.Recognition == nil {
+	case "Points.Recognition":
+		if e.complexity.Points.Recognition == nil {
 			break
 		}
 
-		return e.complexity.Point.Recognition(childComplexity), true
+		return e.complexity.Points.Recognition(childComplexity), true
 
-	case "Point.Review":
-		if e.complexity.Point.Review == nil {
+	case "Points.Review":
+		if e.complexity.Points.Review == nil {
 			break
 		}
 
-		return e.complexity.Point.Review(childComplexity), true
+		return e.complexity.Points.Review(childComplexity), true
 
-	case "Point.Signup":
-		if e.complexity.Point.Signup == nil {
+	case "Points.Signup":
+		if e.complexity.Points.Signup == nil {
 			break
 		}
 
-		return e.complexity.Point.Signup(childComplexity), true
+		return e.complexity.Points.Signup(childComplexity), true
 
-	case "Point.Ticket":
-		if e.complexity.Point.Ticket == nil {
+	case "Points.Ticket":
+		if e.complexity.Points.Ticket == nil {
 			break
 		}
 
-		return e.complexity.Point.Ticket(childComplexity), true
+		return e.complexity.Points.Ticket(childComplexity), true
 
-	case "Point.Track":
-		if e.complexity.Point.Track == nil {
+	case "Points.Total":
+		if e.complexity.Points.Total == nil {
 			break
 		}
 
-		return e.complexity.Point.Track(childComplexity), true
+		return e.complexity.Points.Total(childComplexity), true
+
+	case "Points.Track":
+		if e.complexity.Points.Track == nil {
+			break
+		}
+
+		return e.complexity.Points.Track(childComplexity), true
 
 	case "Purchase.Amount":
 		if e.complexity.Purchase.Amount == nil {
@@ -782,7 +821,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Purchase.Amount(childComplexity), true
 
-	case "Purchase.ID":
+	case "Purchase._id":
 		if e.complexity.Purchase.ID == nil {
 			break
 		}
@@ -845,7 +884,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.Users(childComplexity), true
 
-	case "Recognition.ID":
+	case "Recognition._id":
 		if e.complexity.Recognition.ID == nil {
 			break
 		}
@@ -880,7 +919,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Review.Content(childComplexity), true
 
-	case "Review.ID":
+	case "Review._id":
 		if e.complexity.Review.ID == nil {
 			break
 		}
@@ -936,7 +975,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Show.Description(childComplexity), true
 
-	case "Show.ID":
+	case "Show._id":
 		if e.complexity.Show.ID == nil {
 			break
 		}
@@ -957,7 +996,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Show.Tickets(childComplexity), true
 
-	case "Ticket.ID":
+	case "Ticket._id":
 		if e.complexity.Ticket.ID == nil {
 			break
 		}
@@ -1013,7 +1052,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Track.File(childComplexity), true
 
-	case "Track.ID":
+	case "Track._id":
 		if e.complexity.Track.ID == nil {
 			break
 		}
@@ -1041,12 +1080,26 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Track.Recognition(childComplexity), true
 
+	case "User.AuthType":
+		if e.complexity.User.AuthType == nil {
+			break
+		}
+
+		return e.complexity.User.AuthType(childComplexity), true
+
 	case "User.CountFollowing":
 		if e.complexity.User.CountFollowing == nil {
 			break
 		}
 
 		return e.complexity.User.CountFollowing(childComplexity), true
+
+	case "User.CurrentPlan":
+		if e.complexity.User.CurrentPlan == nil {
+			break
+		}
+
+		return e.complexity.User.CurrentPlan(childComplexity), true
 
 	case "User.DirectMessageUsers":
 		if e.complexity.User.DirectMessageUsers == nil {
@@ -1104,7 +1157,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.User.Forums(childComplexity), true
 
-	case "User.ID":
+	case "User._id":
 		if e.complexity.User.ID == nil {
 			break
 		}
@@ -1131,6 +1184,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.User.Pages(childComplexity), true
+
+	case "User.Password":
+		if e.complexity.User.Password == nil {
+			break
+		}
+
+		return e.complexity.User.Password(childComplexity), true
 
 	case "User.Points":
 		if e.complexity.User.Points == nil {
@@ -1174,12 +1234,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.User.Tracks(childComplexity), true
 
-	case "User.Username":
-		if e.complexity.User.Username == nil {
+	case "User.UserType":
+		if e.complexity.User.UserType == nil {
 			break
 		}
 
-		return e.complexity.User.Username(childComplexity), true
+		return e.complexity.User.UserType(childComplexity), true
 
 	}
 	return 0, false
@@ -1261,13 +1321,14 @@ input CreateUserInput {
 
 input UpdateUserInput {
   Name: String!
-  Username: String!
   Password: String!
   Email: String!
 }
 
 type Mutation {
   createDiscussionThread(name: String!): MutationRes!
+  loginFacebook(token: String!): MutationRes!
+  loginGoogle(token: String!): MutationRes!
   createUser(input: CreateUserInput): MutationRes!
   updateUser(input: UpdateUserInput): MutationRes!
   deleteUser: MutationRes!
@@ -1278,14 +1339,14 @@ type Mutation {
 # https://gqlgen.com/getting-started/
 
 type Follow {
-  ID: ID!
+  _id: ID!
   User: ID!
   FollowType: String!
   Following: ID!
 }
 
 type Purchase {
-  ID: ID!
+  _id: ID!
   User: ID!
   Type: String! # ticket or merch
   itemID: ID! # ID of item purchased
@@ -1295,7 +1356,15 @@ type Purchase {
   Received: Boolean! # if item was received
 }
 
-type Point { # global point values
+type Donation {
+  _id: ID!
+  User: ID!
+  Amount: Int!
+  StripeID: ID! # ID of purchase amount
+}
+
+type Points { # global point values
+  Total: Int!
   Signup: Int!
   Track: Int!
   Recognition: Int!
@@ -1307,18 +1376,14 @@ type Point { # global point values
   Review: Int!
 }
 
-type Donation {
-  ID: ID!
-  User: ID!
-  Amount: Int!
-  StripeID: ID! # ID of purchase amount
-}
-
 type User {
-  ID: ID!
-  Username: String
-  Email: String
-  Name: String
+  _id: ID!
+  AuthType: String!
+  UserType: String!
+  CurrentPlan: String! # lofi purchased plan
+  Email: String!
+  Name: String!
+  Password: String
   Pages: [ID!]!
   Recognition: [ID!]!
   Location: String # gps coordinates
@@ -1334,11 +1399,11 @@ type User {
   EmailVerified: Boolean!
   Purchases: [ID!]
   Donations: [ID!]
-  Points: Int!
+  Points: Points!
 }
 
 type Review {
-  ID: ID!
+  _id: ID!
   ReviewedID: ID! # ID for track or album
   Type: String!
   User: ID! # user who reviewed the item
@@ -1347,7 +1412,7 @@ type Review {
 }
 
 type Album {
-  ID: ID!
+  _id: ID!
   Tracks: [ID!]!
   Name: String!
   PublishDate: Int!
@@ -1356,7 +1421,7 @@ type Album {
 }
 
 type Track { # (music track)
-  ID: ID!
+  _id: ID!
   File: String!
   Name: String!
   Description: String!
@@ -1366,14 +1431,14 @@ type Track { # (music track)
 }
 
 type Recognition {
-  ID: ID!
+  _id: ID!
   User: ID!
   Track: ID!
   Message: String!
 }
 
 type Merch {
-  ID: ID!
+  _id: ID!
   Price: ID!
   InStock: Int!
   StripeID: ID!
@@ -1381,7 +1446,7 @@ type Merch {
 }
 
 type Band { # (band page)
-  ID: ID!
+  _id: ID!
   Location: String! # gps coords
   Name: String!
   Users: [ID!]!
@@ -1392,7 +1457,7 @@ type Band { # (band page)
 }
 
 type Show {
-  ID: ID!
+  _id: ID!
   Date: Int!
   Location: String! # gps coords
   Bands: [ID!]!
@@ -1401,7 +1466,7 @@ type Show {
 }
 
 type Ticket {
-  ID: ID!
+  _id: ID!
   Show: ID!
   Type: String!
   Price: Int!
@@ -1409,14 +1474,14 @@ type Ticket {
 }
 
 type MessageVote {
-  ID: ID!
+  _id: ID!
   User: ID!
   Vote: Boolean! # up = true / down = false
   Type: String! # forum or discussion
 }
 
 type ForumMessage {
-  ID: ID!
+  _id: ID!
   forum: ID!
   publishDate: Int!
   Author: ID!
@@ -1425,12 +1490,12 @@ type ForumMessage {
 }
 
 type ForumPage {
-  ID: ID!
+  _id: ID!
   Name: String!
 }
 
 type DiscussionThreadMessage {
-  ID: ID!
+  _id: ID!
   discussionThread: ID!
   publishDate: Int!
   Author: ID!
@@ -1440,13 +1505,13 @@ type DiscussionThreadMessage {
 }
 
 type DiscussionThread {
-  ID: ID!
+  _id: ID!
   Owner: ID!
   Name: String
 }
 
 type DirectMessage {
-  ID: ID!
+  _id: ID!
   from: ID!
   To: ID!
   publishDate: Int!
@@ -1492,6 +1557,34 @@ func (ec *executionContext) field_Mutation_createUser_args(ctx context.Context, 
 		}
 	}
 	args["input"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_loginFacebook_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 string
+	if tmp, ok := rawArgs["token"]; ok {
+		arg0, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["token"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_loginGoogle_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 string
+	if tmp, ok := rawArgs["token"]; ok {
+		arg0, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["token"] = arg0
 	return args, nil
 }
 
@@ -1581,7 +1674,7 @@ func (ec *executionContext) field___Type_fields_args(ctx context.Context, rawArg
 
 // region    **************************** field.gotpl *****************************
 
-func (ec *executionContext) _Album_ID(ctx context.Context, field graphql.CollectedField, obj *model.Album) (ret graphql.Marshaler) {
+func (ec *executionContext) _Album__id(ctx context.Context, field graphql.CollectedField, obj *model.Album) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -1785,7 +1878,7 @@ func (ec *executionContext) _Album_Reviews(ctx context.Context, field graphql.Co
 	return ec.marshalNID2ᚕstringᚄ(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Band_ID(ctx context.Context, field graphql.CollectedField, obj *model.Band) (ret graphql.Marshaler) {
+func (ec *executionContext) _Band__id(ctx context.Context, field graphql.CollectedField, obj *model.Band) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -2057,7 +2150,7 @@ func (ec *executionContext) _Band_Merch(ctx context.Context, field graphql.Colle
 	return ec.marshalNID2ᚕstringᚄ(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _DirectMessage_ID(ctx context.Context, field graphql.CollectedField, obj *model.DirectMessage) (ret graphql.Marshaler) {
+func (ec *executionContext) _DirectMessage__id(ctx context.Context, field graphql.CollectedField, obj *model.DirectMessage) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -2227,7 +2320,7 @@ func (ec *executionContext) _DirectMessage_message(ctx context.Context, field gr
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _DiscussionThread_ID(ctx context.Context, field graphql.CollectedField, obj *model.DiscussionThread) (ret graphql.Marshaler) {
+func (ec *executionContext) _DiscussionThread__id(ctx context.Context, field graphql.CollectedField, obj *model.DiscussionThread) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -2326,7 +2419,7 @@ func (ec *executionContext) _DiscussionThread_Name(ctx context.Context, field gr
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _DiscussionThreadMessage_ID(ctx context.Context, field graphql.CollectedField, obj *model.DiscussionThreadMessage) (ret graphql.Marshaler) {
+func (ec *executionContext) _DiscussionThreadMessage__id(ctx context.Context, field graphql.CollectedField, obj *model.DiscussionThreadMessage) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -2564,7 +2657,7 @@ func (ec *executionContext) _DiscussionThreadMessage_VotesDown(ctx context.Conte
 	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Donation_ID(ctx context.Context, field graphql.CollectedField, obj *model.Donation) (ret graphql.Marshaler) {
+func (ec *executionContext) _Donation__id(ctx context.Context, field graphql.CollectedField, obj *model.Donation) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -2700,7 +2793,7 @@ func (ec *executionContext) _Donation_StripeID(ctx context.Context, field graphq
 	return ec.marshalNID2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Follow_ID(ctx context.Context, field graphql.CollectedField, obj *model.Follow) (ret graphql.Marshaler) {
+func (ec *executionContext) _Follow__id(ctx context.Context, field graphql.CollectedField, obj *model.Follow) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -2836,7 +2929,7 @@ func (ec *executionContext) _Follow_Following(ctx context.Context, field graphql
 	return ec.marshalNID2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _ForumMessage_ID(ctx context.Context, field graphql.CollectedField, obj *model.ForumMessage) (ret graphql.Marshaler) {
+func (ec *executionContext) _ForumMessage__id(ctx context.Context, field graphql.CollectedField, obj *model.ForumMessage) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -3040,7 +3133,7 @@ func (ec *executionContext) _ForumMessage_VotesDown(ctx context.Context, field g
 	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _ForumPage_ID(ctx context.Context, field graphql.CollectedField, obj *model.ForumPage) (ret graphql.Marshaler) {
+func (ec *executionContext) _ForumPage__id(ctx context.Context, field graphql.CollectedField, obj *model.ForumPage) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -3108,7 +3201,7 @@ func (ec *executionContext) _ForumPage_Name(ctx context.Context, field graphql.C
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Merch_ID(ctx context.Context, field graphql.CollectedField, obj *model.Merch) (ret graphql.Marshaler) {
+func (ec *executionContext) _Merch__id(ctx context.Context, field graphql.CollectedField, obj *model.Merch) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -3278,7 +3371,7 @@ func (ec *executionContext) _Merch_Purchases(ctx context.Context, field graphql.
 	return ec.marshalNID2ᚕstringᚄ(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _MessageVote_ID(ctx context.Context, field graphql.CollectedField, obj *model.MessageVote) (ret graphql.Marshaler) {
+func (ec *executionContext) _MessageVote__id(ctx context.Context, field graphql.CollectedField, obj *model.MessageVote) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -3439,6 +3532,88 @@ func (ec *executionContext) _Mutation_createDiscussionThread(ctx context.Context
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
 		return ec.resolvers.Mutation().CreateDiscussionThread(rctx, args["name"].(string))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.MutationRes)
+	fc.Result = res
+	return ec.marshalNMutationRes2ᚖgithubᚗcomᚋaaronlerch3ᚋlofiᚋapiᚋgraphᚋmodelᚐMutationRes(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Mutation_loginFacebook(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "Mutation",
+		Field:    field,
+		Args:     nil,
+		IsMethod: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Mutation_loginFacebook_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().LoginFacebook(rctx, args["token"].(string))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.MutationRes)
+	fc.Result = res
+	return ec.marshalNMutationRes2ᚖgithubᚗcomᚋaaronlerch3ᚋlofiᚋapiᚋgraphᚋmodelᚐMutationRes(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Mutation_loginGoogle(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "Mutation",
+		Field:    field,
+		Args:     nil,
+		IsMethod: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Mutation_loginGoogle_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().LoginGoogle(rctx, args["token"].(string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -3680,7 +3855,7 @@ func (ec *executionContext) _MutationRes_Message(ctx context.Context, field grap
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Point_Signup(ctx context.Context, field graphql.CollectedField, obj *model.Point) (ret graphql.Marshaler) {
+func (ec *executionContext) _Points_Total(ctx context.Context, field graphql.CollectedField, obj *model.Points) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -3688,7 +3863,41 @@ func (ec *executionContext) _Point_Signup(ctx context.Context, field graphql.Col
 		}
 	}()
 	fc := &graphql.FieldContext{
-		Object:   "Point",
+		Object:   "Points",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Total, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Points_Signup(ctx context.Context, field graphql.CollectedField, obj *model.Points) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "Points",
 		Field:    field,
 		Args:     nil,
 		IsMethod: false,
@@ -3714,7 +3923,7 @@ func (ec *executionContext) _Point_Signup(ctx context.Context, field graphql.Col
 	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Point_Track(ctx context.Context, field graphql.CollectedField, obj *model.Point) (ret graphql.Marshaler) {
+func (ec *executionContext) _Points_Track(ctx context.Context, field graphql.CollectedField, obj *model.Points) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -3722,7 +3931,7 @@ func (ec *executionContext) _Point_Track(ctx context.Context, field graphql.Coll
 		}
 	}()
 	fc := &graphql.FieldContext{
-		Object:   "Point",
+		Object:   "Points",
 		Field:    field,
 		Args:     nil,
 		IsMethod: false,
@@ -3748,7 +3957,7 @@ func (ec *executionContext) _Point_Track(ctx context.Context, field graphql.Coll
 	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Point_Recognition(ctx context.Context, field graphql.CollectedField, obj *model.Point) (ret graphql.Marshaler) {
+func (ec *executionContext) _Points_Recognition(ctx context.Context, field graphql.CollectedField, obj *model.Points) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -3756,7 +3965,7 @@ func (ec *executionContext) _Point_Recognition(ctx context.Context, field graphq
 		}
 	}()
 	fc := &graphql.FieldContext{
-		Object:   "Point",
+		Object:   "Points",
 		Field:    field,
 		Args:     nil,
 		IsMethod: false,
@@ -3782,7 +3991,7 @@ func (ec *executionContext) _Point_Recognition(ctx context.Context, field graphq
 	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Point_JoinBand(ctx context.Context, field graphql.CollectedField, obj *model.Point) (ret graphql.Marshaler) {
+func (ec *executionContext) _Points_JoinBand(ctx context.Context, field graphql.CollectedField, obj *model.Points) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -3790,7 +3999,7 @@ func (ec *executionContext) _Point_JoinBand(ctx context.Context, field graphql.C
 		}
 	}()
 	fc := &graphql.FieldContext{
-		Object:   "Point",
+		Object:   "Points",
 		Field:    field,
 		Args:     nil,
 		IsMethod: false,
@@ -3816,7 +4025,7 @@ func (ec *executionContext) _Point_JoinBand(ctx context.Context, field graphql.C
 	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Point_Ticket(ctx context.Context, field graphql.CollectedField, obj *model.Point) (ret graphql.Marshaler) {
+func (ec *executionContext) _Points_Ticket(ctx context.Context, field graphql.CollectedField, obj *model.Points) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -3824,7 +4033,7 @@ func (ec *executionContext) _Point_Ticket(ctx context.Context, field graphql.Col
 		}
 	}()
 	fc := &graphql.FieldContext{
-		Object:   "Point",
+		Object:   "Points",
 		Field:    field,
 		Args:     nil,
 		IsMethod: false,
@@ -3850,7 +4059,7 @@ func (ec *executionContext) _Point_Ticket(ctx context.Context, field graphql.Col
 	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Point_Merch(ctx context.Context, field graphql.CollectedField, obj *model.Point) (ret graphql.Marshaler) {
+func (ec *executionContext) _Points_Merch(ctx context.Context, field graphql.CollectedField, obj *model.Points) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -3858,7 +4067,7 @@ func (ec *executionContext) _Point_Merch(ctx context.Context, field graphql.Coll
 		}
 	}()
 	fc := &graphql.FieldContext{
-		Object:   "Point",
+		Object:   "Points",
 		Field:    field,
 		Args:     nil,
 		IsMethod: false,
@@ -3884,7 +4093,7 @@ func (ec *executionContext) _Point_Merch(ctx context.Context, field graphql.Coll
 	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Point_Donate(ctx context.Context, field graphql.CollectedField, obj *model.Point) (ret graphql.Marshaler) {
+func (ec *executionContext) _Points_Donate(ctx context.Context, field graphql.CollectedField, obj *model.Points) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -3892,7 +4101,7 @@ func (ec *executionContext) _Point_Donate(ctx context.Context, field graphql.Col
 		}
 	}()
 	fc := &graphql.FieldContext{
-		Object:   "Point",
+		Object:   "Points",
 		Field:    field,
 		Args:     nil,
 		IsMethod: false,
@@ -3918,7 +4127,7 @@ func (ec *executionContext) _Point_Donate(ctx context.Context, field graphql.Col
 	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Point_ForumMessage(ctx context.Context, field graphql.CollectedField, obj *model.Point) (ret graphql.Marshaler) {
+func (ec *executionContext) _Points_ForumMessage(ctx context.Context, field graphql.CollectedField, obj *model.Points) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -3926,7 +4135,7 @@ func (ec *executionContext) _Point_ForumMessage(ctx context.Context, field graph
 		}
 	}()
 	fc := &graphql.FieldContext{
-		Object:   "Point",
+		Object:   "Points",
 		Field:    field,
 		Args:     nil,
 		IsMethod: false,
@@ -3952,7 +4161,7 @@ func (ec *executionContext) _Point_ForumMessage(ctx context.Context, field graph
 	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Point_Review(ctx context.Context, field graphql.CollectedField, obj *model.Point) (ret graphql.Marshaler) {
+func (ec *executionContext) _Points_Review(ctx context.Context, field graphql.CollectedField, obj *model.Points) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -3960,7 +4169,7 @@ func (ec *executionContext) _Point_Review(ctx context.Context, field graphql.Col
 		}
 	}()
 	fc := &graphql.FieldContext{
-		Object:   "Point",
+		Object:   "Points",
 		Field:    field,
 		Args:     nil,
 		IsMethod: false,
@@ -3986,7 +4195,7 @@ func (ec *executionContext) _Point_Review(ctx context.Context, field graphql.Col
 	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Purchase_ID(ctx context.Context, field graphql.CollectedField, obj *model.Purchase) (ret graphql.Marshaler) {
+func (ec *executionContext) _Purchase__id(ctx context.Context, field graphql.CollectedField, obj *model.Purchase) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -4395,7 +4604,7 @@ func (ec *executionContext) _Query___schema(ctx context.Context, field graphql.C
 	return ec.marshalO__Schema2ᚖgithubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚋintrospectionᚐSchema(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Recognition_ID(ctx context.Context, field graphql.CollectedField, obj *model.Recognition) (ret graphql.Marshaler) {
+func (ec *executionContext) _Recognition__id(ctx context.Context, field graphql.CollectedField, obj *model.Recognition) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -4531,7 +4740,7 @@ func (ec *executionContext) _Recognition_Message(ctx context.Context, field grap
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Review_ID(ctx context.Context, field graphql.CollectedField, obj *model.Review) (ret graphql.Marshaler) {
+func (ec *executionContext) _Review__id(ctx context.Context, field graphql.CollectedField, obj *model.Review) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -4732,7 +4941,7 @@ func (ec *executionContext) _Review_Content(ctx context.Context, field graphql.C
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Show_ID(ctx context.Context, field graphql.CollectedField, obj *model.Show) (ret graphql.Marshaler) {
+func (ec *executionContext) _Show__id(ctx context.Context, field graphql.CollectedField, obj *model.Show) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -4936,7 +5145,7 @@ func (ec *executionContext) _Show_Tickets(ctx context.Context, field graphql.Col
 	return ec.marshalNID2ᚕstringᚄ(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Ticket_ID(ctx context.Context, field graphql.CollectedField, obj *model.Ticket) (ret graphql.Marshaler) {
+func (ec *executionContext) _Ticket__id(ctx context.Context, field graphql.CollectedField, obj *model.Ticket) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -5106,7 +5315,7 @@ func (ec *executionContext) _Ticket_StripeID(ctx context.Context, field graphql.
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Track_ID(ctx context.Context, field graphql.CollectedField, obj *model.Track) (ret graphql.Marshaler) {
+func (ec *executionContext) _Track__id(ctx context.Context, field graphql.CollectedField, obj *model.Track) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -5344,7 +5553,7 @@ func (ec *executionContext) _Track_PlayCount(ctx context.Context, field graphql.
 	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _User_ID(ctx context.Context, field graphql.CollectedField, obj *model.User) (ret graphql.Marshaler) {
+func (ec *executionContext) _User__id(ctx context.Context, field graphql.CollectedField, obj *model.User) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -5378,7 +5587,7 @@ func (ec *executionContext) _User_ID(ctx context.Context, field graphql.Collecte
 	return ec.marshalNID2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _User_Username(ctx context.Context, field graphql.CollectedField, obj *model.User) (ret graphql.Marshaler) {
+func (ec *executionContext) _User_AuthType(ctx context.Context, field graphql.CollectedField, obj *model.User) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -5395,18 +5604,89 @@ func (ec *executionContext) _User_Username(ctx context.Context, field graphql.Co
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Username, nil
+		return obj.AuthType, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _User_UserType(ctx context.Context, field graphql.CollectedField, obj *model.User) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "User",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UserType, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _User_CurrentPlan(ctx context.Context, field graphql.CollectedField, obj *model.User) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "User",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CurrentPlan, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _User_Email(ctx context.Context, field graphql.CollectedField, obj *model.User) (ret graphql.Marshaler) {
@@ -5433,11 +5713,14 @@ func (ec *executionContext) _User_Email(ctx context.Context, field graphql.Colle
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _User_Name(ctx context.Context, field graphql.CollectedField, obj *model.User) (ret graphql.Marshaler) {
@@ -5458,6 +5741,40 @@ func (ec *executionContext) _User_Name(ctx context.Context, field graphql.Collec
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
 		return obj.Name, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _User_Password(ctx context.Context, field graphql.CollectedField, obj *model.User) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "User",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Password, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -5977,9 +6294,9 @@ func (ec *executionContext) _User_Points(ctx context.Context, field graphql.Coll
 		}
 		return graphql.Null
 	}
-	res := resTmp.(int)
+	res := resTmp.(*model.Points)
 	fc.Result = res
-	return ec.marshalNInt2int(ctx, field.Selections, res)
+	return ec.marshalNPoints2ᚖgithubᚗcomᚋaaronlerch3ᚋlofiᚋapiᚋgraphᚋmodelᚐPoints(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) ___Directive_name(ctx context.Context, field graphql.CollectedField, obj *introspection.Directive) (ret graphql.Marshaler) {
@@ -7085,12 +7402,6 @@ func (ec *executionContext) unmarshalInputUpdateUserInput(ctx context.Context, o
 			if err != nil {
 				return it, err
 			}
-		case "Username":
-			var err error
-			it.Username, err = ec.unmarshalNString2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
 		case "Password":
 			var err error
 			it.Password, err = ec.unmarshalNString2string(ctx, v)
@@ -7128,8 +7439,8 @@ func (ec *executionContext) _Album(ctx context.Context, sel ast.SelectionSet, ob
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Album")
-		case "ID":
-			out.Values[i] = ec._Album_ID(ctx, field, obj)
+		case "_id":
+			out.Values[i] = ec._Album__id(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -7180,8 +7491,8 @@ func (ec *executionContext) _Band(ctx context.Context, sel ast.SelectionSet, obj
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Band")
-		case "ID":
-			out.Values[i] = ec._Band_ID(ctx, field, obj)
+		case "_id":
+			out.Values[i] = ec._Band__id(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -7242,8 +7553,8 @@ func (ec *executionContext) _DirectMessage(ctx context.Context, sel ast.Selectio
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("DirectMessage")
-		case "ID":
-			out.Values[i] = ec._DirectMessage_ID(ctx, field, obj)
+		case "_id":
+			out.Values[i] = ec._DirectMessage__id(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -7289,8 +7600,8 @@ func (ec *executionContext) _DiscussionThread(ctx context.Context, sel ast.Selec
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("DiscussionThread")
-		case "ID":
-			out.Values[i] = ec._DiscussionThread_ID(ctx, field, obj)
+		case "_id":
+			out.Values[i] = ec._DiscussionThread__id(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -7323,8 +7634,8 @@ func (ec *executionContext) _DiscussionThreadMessage(ctx context.Context, sel as
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("DiscussionThreadMessage")
-		case "ID":
-			out.Values[i] = ec._DiscussionThreadMessage_ID(ctx, field, obj)
+		case "_id":
+			out.Values[i] = ec._DiscussionThreadMessage__id(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -7380,8 +7691,8 @@ func (ec *executionContext) _Donation(ctx context.Context, sel ast.SelectionSet,
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Donation")
-		case "ID":
-			out.Values[i] = ec._Donation_ID(ctx, field, obj)
+		case "_id":
+			out.Values[i] = ec._Donation__id(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -7422,8 +7733,8 @@ func (ec *executionContext) _Follow(ctx context.Context, sel ast.SelectionSet, o
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Follow")
-		case "ID":
-			out.Values[i] = ec._Follow_ID(ctx, field, obj)
+		case "_id":
+			out.Values[i] = ec._Follow__id(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -7464,8 +7775,8 @@ func (ec *executionContext) _ForumMessage(ctx context.Context, sel ast.Selection
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("ForumMessage")
-		case "ID":
-			out.Values[i] = ec._ForumMessage_ID(ctx, field, obj)
+		case "_id":
+			out.Values[i] = ec._ForumMessage__id(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -7516,8 +7827,8 @@ func (ec *executionContext) _ForumPage(ctx context.Context, sel ast.SelectionSet
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("ForumPage")
-		case "ID":
-			out.Values[i] = ec._ForumPage_ID(ctx, field, obj)
+		case "_id":
+			out.Values[i] = ec._ForumPage__id(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -7548,8 +7859,8 @@ func (ec *executionContext) _Merch(ctx context.Context, sel ast.SelectionSet, ob
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Merch")
-		case "ID":
-			out.Values[i] = ec._Merch_ID(ctx, field, obj)
+		case "_id":
+			out.Values[i] = ec._Merch__id(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -7595,8 +7906,8 @@ func (ec *executionContext) _MessageVote(ctx context.Context, sel ast.SelectionS
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("MessageVote")
-		case "ID":
-			out.Values[i] = ec._MessageVote_ID(ctx, field, obj)
+		case "_id":
+			out.Values[i] = ec._MessageVote__id(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -7643,6 +7954,16 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			out.Values[i] = graphql.MarshalString("Mutation")
 		case "createDiscussionThread":
 			out.Values[i] = ec._Mutation_createDiscussionThread(ctx, field)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "loginFacebook":
+			out.Values[i] = ec._Mutation_loginFacebook(ctx, field)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "loginGoogle":
+			out.Values[i] = ec._Mutation_loginGoogle(ctx, field)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -7709,59 +8030,64 @@ func (ec *executionContext) _MutationRes(ctx context.Context, sel ast.SelectionS
 	return out
 }
 
-var pointImplementors = []string{"Point"}
+var pointsImplementors = []string{"Points"}
 
-func (ec *executionContext) _Point(ctx context.Context, sel ast.SelectionSet, obj *model.Point) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, pointImplementors)
+func (ec *executionContext) _Points(ctx context.Context, sel ast.SelectionSet, obj *model.Points) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, pointsImplementors)
 
 	out := graphql.NewFieldSet(fields)
 	var invalids uint32
 	for i, field := range fields {
 		switch field.Name {
 		case "__typename":
-			out.Values[i] = graphql.MarshalString("Point")
+			out.Values[i] = graphql.MarshalString("Points")
+		case "Total":
+			out.Values[i] = ec._Points_Total(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "Signup":
-			out.Values[i] = ec._Point_Signup(ctx, field, obj)
+			out.Values[i] = ec._Points_Signup(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
 		case "Track":
-			out.Values[i] = ec._Point_Track(ctx, field, obj)
+			out.Values[i] = ec._Points_Track(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
 		case "Recognition":
-			out.Values[i] = ec._Point_Recognition(ctx, field, obj)
+			out.Values[i] = ec._Points_Recognition(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
 		case "JoinBand":
-			out.Values[i] = ec._Point_JoinBand(ctx, field, obj)
+			out.Values[i] = ec._Points_JoinBand(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
 		case "Ticket":
-			out.Values[i] = ec._Point_Ticket(ctx, field, obj)
+			out.Values[i] = ec._Points_Ticket(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
 		case "Merch":
-			out.Values[i] = ec._Point_Merch(ctx, field, obj)
+			out.Values[i] = ec._Points_Merch(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
 		case "Donate":
-			out.Values[i] = ec._Point_Donate(ctx, field, obj)
+			out.Values[i] = ec._Points_Donate(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
 		case "ForumMessage":
-			out.Values[i] = ec._Point_ForumMessage(ctx, field, obj)
+			out.Values[i] = ec._Points_ForumMessage(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
 		case "Review":
-			out.Values[i] = ec._Point_Review(ctx, field, obj)
+			out.Values[i] = ec._Points_Review(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -7787,8 +8113,8 @@ func (ec *executionContext) _Purchase(ctx context.Context, sel ast.SelectionSet,
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Purchase")
-		case "ID":
-			out.Values[i] = ec._Purchase_ID(ctx, field, obj)
+		case "_id":
+			out.Values[i] = ec._Purchase__id(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -7907,8 +8233,8 @@ func (ec *executionContext) _Recognition(ctx context.Context, sel ast.SelectionS
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Recognition")
-		case "ID":
-			out.Values[i] = ec._Recognition_ID(ctx, field, obj)
+		case "_id":
+			out.Values[i] = ec._Recognition__id(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -7949,8 +8275,8 @@ func (ec *executionContext) _Review(ctx context.Context, sel ast.SelectionSet, o
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Review")
-		case "ID":
-			out.Values[i] = ec._Review_ID(ctx, field, obj)
+		case "_id":
+			out.Values[i] = ec._Review__id(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -7998,8 +8324,8 @@ func (ec *executionContext) _Show(ctx context.Context, sel ast.SelectionSet, obj
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Show")
-		case "ID":
-			out.Values[i] = ec._Show_ID(ctx, field, obj)
+		case "_id":
+			out.Values[i] = ec._Show__id(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -8050,8 +8376,8 @@ func (ec *executionContext) _Ticket(ctx context.Context, sel ast.SelectionSet, o
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Ticket")
-		case "ID":
-			out.Values[i] = ec._Ticket_ID(ctx, field, obj)
+		case "_id":
+			out.Values[i] = ec._Ticket__id(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -8097,8 +8423,8 @@ func (ec *executionContext) _Track(ctx context.Context, sel ast.SelectionSet, ob
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Track")
-		case "ID":
-			out.Values[i] = ec._Track_ID(ctx, field, obj)
+		case "_id":
+			out.Values[i] = ec._Track__id(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -8154,17 +8480,38 @@ func (ec *executionContext) _User(ctx context.Context, sel ast.SelectionSet, obj
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("User")
-		case "ID":
-			out.Values[i] = ec._User_ID(ctx, field, obj)
+		case "_id":
+			out.Values[i] = ec._User__id(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "Username":
-			out.Values[i] = ec._User_Username(ctx, field, obj)
+		case "AuthType":
+			out.Values[i] = ec._User_AuthType(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "UserType":
+			out.Values[i] = ec._User_UserType(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "CurrentPlan":
+			out.Values[i] = ec._User_CurrentPlan(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "Email":
 			out.Values[i] = ec._User_Email(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "Name":
 			out.Values[i] = ec._User_Name(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "Password":
+			out.Values[i] = ec._User_Password(ctx, field, obj)
 		case "Pages":
 			out.Values[i] = ec._User_Pages(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -8551,6 +8898,20 @@ func (ec *executionContext) marshalNMutationRes2ᚖgithubᚗcomᚋaaronlerch3ᚋ
 		return graphql.Null
 	}
 	return ec._MutationRes(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalNPoints2githubᚗcomᚋaaronlerch3ᚋlofiᚋapiᚋgraphᚋmodelᚐPoints(ctx context.Context, sel ast.SelectionSet, v model.Points) graphql.Marshaler {
+	return ec._Points(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNPoints2ᚖgithubᚗcomᚋaaronlerch3ᚋlofiᚋapiᚋgraphᚋmodelᚐPoints(ctx context.Context, sel ast.SelectionSet, v *model.Points) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	return ec._Points(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalNString2string(ctx context.Context, v interface{}) (string, error) {

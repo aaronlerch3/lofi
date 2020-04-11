@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">lofi</string>
+
+    <string name="facebook_app_id">639536763262020</string>
+
+    <string name="fb_login_protocol_scheme">fb639536763262020</string>
+</resources>
