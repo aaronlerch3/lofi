@@ -4,7 +4,7 @@
   "description": "api serverless",
   "main": "echo \"Error: no main\" && exit 1",
   "dependencies": {
-    "serverless-offline": "^5.12.1"
+    "serverless-offline": "^12.0.3"
   },
   "devDependencies": {},
   "scripts": {
